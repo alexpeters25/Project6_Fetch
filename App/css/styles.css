@@ -24,7 +24,7 @@ div {
 
 #pageFrame { /*Header, Body, Footer: grid*/
     display: grid;
-    grid-template-rows: minmax(50px, 10vh) 80vh minmax(50px, 10vh); /*figure out exact later*/
+    grid-template-rows: minmax(50px, 10vh) minmax(400px, 80vh) minmax(50px, 10vh); /*figure out exact later*/
     flex-wrap: nowrap;
     margin: 0;
     
