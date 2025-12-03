@@ -22,6 +22,8 @@ div {
 }
 
 
+
+
 #pageFrame { /*Header, Body, Footer: grid*/
     display: grid;
     grid-template-rows: minmax(50px, 10vh) minmax(400px, 80vh) minmax(50px, 10vh); /*figure out exact later*/
@@ -37,10 +39,18 @@ div {
     align-items: center;
 }
 
+/*--------------------Header--------------------*/
+#headerRibbon img {
+    height: 100%;
+    width: auto;
+}
+
+
 #headerRibbon p {
     margin: 0 10px;
 }
 
+/*--------------------Frame--------------------*/
 #frameBody {
     background-color: var(--medSecondaryBg);
     display: flex;
@@ -48,6 +58,7 @@ div {
     align-items: center;
 }
 
+/*--------------------Footer--------------------*/
 #footerRibbon {
     background-color: var(--darkPrimaryBg);
     color: var(--ribbonTextColor);
