@@ -1,10 +1,19 @@
+:root {
+    --darkPrimaryBg: #171a21;
+    --secondaryTextColor: #66c0f4;
+    --medSecondaryBg: #1b2838;
+    --lightPrimaryBg: #2a475e;
+    --primaryTextColor: #c7d5e0;
+    --ribbonTextColor: #ffffff;
+}
+
 h1 { 
-    color: white;
+    color: var(--primaryTextColor);
 }
 
 body {
     margin: 0; /*Brings margin out to edges of viewport*/
-    color: white; /*Default text color is white for easier visibility*/
+    color: var(--primaryTextColor);
 }
 
 div {
@@ -22,7 +31,8 @@ div {
 }
 
 #headerRibbon {
-    background-color: #171a21;
+    background-color: var(--darkPrimaryBg);
+    color: var(--ribbonTextColor);
     display: flex;
     align-items: center;
 }
@@ -32,14 +42,15 @@ div {
 }
 
 #frameBody {
-    background-color: #1b2838;
+    background-color: var(--medSecondaryBg);
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
 #footerRibbon {
-    background-color: #171a21;
+    background-color: var(--darkPrimaryBg);
+    color: var(--ribbonTextColor);
     display: flex;
     align-items: center;
 }
