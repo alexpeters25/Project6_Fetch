@@ -29,7 +29,6 @@ div {
     grid-template-rows: minmax(50px, 10vh) minmax(400px, 80vh) minmax(50px, 10vh); /*figure out exact later*/
     flex-wrap: nowrap;
     margin: 0;
-    
 }
 
 #headerRibbon {
@@ -43,6 +42,7 @@ div {
 #headerRibbon img {
     height: 100%;
     width: auto;
+    max-width: 100%;
 }
 
 
@@ -56,7 +56,37 @@ div {
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 30px;
 }
+
+.textInput {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.textInput label {
+    margin-bottom: 5px;
+}
+
+#idSubmit {
+    margin-top: 20px;
+    border: 1px solid var(--darkPrimaryBg);
+    border-radius: 3px;
+    background-color: var(--ribbonTextColor);
+}
+
+#idSubmit:hover {
+    background-color: var(--primaryTextColor);
+    box-shadow: 1px 1px 5px, -1px -1px 5px;
+}
+
+#idSubmit:active {
+    background-color: var(--secondaryTextColor);
+    
+}
+
 
 /*--------------------Footer--------------------*/
 #footerRibbon {
