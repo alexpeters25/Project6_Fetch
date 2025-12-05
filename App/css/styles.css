@@ -14,6 +14,7 @@ h1 {
 body {
     margin: 0; /*Brings margin out to edges of viewport*/
     color: var(--primaryTextColor);
+    font-size: min(2vw, 16px);
 }
 
 div {
@@ -26,7 +27,7 @@ div {
 
 #pageFrame { /*Header, Body, Footer: grid*/
     display: grid;
-    grid-template-rows: minmax(50px, 10vh) minmax(400px, 80vh) minmax(50px, 10vh); /*figure out exact later*/
+    grid-template-rows: minmax(50px, 10vh) minmax(500px, 80vh) minmax(50px, 10vh); /*figure out exact later*/
     flex-wrap: nowrap;
     margin: 0;
 }
@@ -59,6 +60,8 @@ div {
     padding: 30px;
 }
 
+
+/*--------------------Initial Screen--------------------*/
 .textInput {
     display: flex;
     flex-direction: column;
@@ -83,9 +86,58 @@ div {
 }
 
 #idSubmit:active {
-    background-color: var(--secondaryTextColor);
-    
+    background-color: var(--secondaryTextColor);   
 }
+
+
+
+/*--------------------Entered Data Screen--------------------*/
+#avatarDisplay {
+    display: flex;
+    justify-content: space-around;
+    border: 1px dashed magenta;
+}
+
+.avatarNamePair {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px dashed cyan;
+    margin: 0 15vw;
+    width: fit-content;
+}
+
+.avatarNamePair label {
+    margin-top: 5px;
+    font-size: min(2vw, 20px);
+}
+
+.avatarBg {
+    background-color: var(--darkPrimaryBg);
+    height: min(10vw, 120px);
+    width: min(10vw, 120px);
+}
+
+
+.gameBox {
+    border: 1px solid white;
+    display: flex;
+    flex-direction: column;
+    width: min(30vw, 1000px);
+}
+
+.gameTitleRibbon {
+    background-color: var(--medSecondaryBg);
+    align-self: center;
+}
+
+.gameBoxBody {
+    background-color: var(--lightPrimaryBg);
+    height: 200px;
+}
+
+
+
 
 
 /*--------------------Footer--------------------*/
