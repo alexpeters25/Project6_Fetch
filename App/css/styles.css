@@ -14,7 +14,8 @@ h1 {
 body {
     margin: 0; /*Brings margin out to edges of viewport*/
     color: var(--primaryTextColor);
-    font-size: min(2vw, 16px);
+    font-size: min(3vw, 16px);
+    font-family: 'Times New Roman';
 }
 
 div {
@@ -27,9 +28,11 @@ div {
 
 #pageFrame { /*Header, Body, Footer: grid*/
     display: grid;
-    grid-template-rows: minmax(50px, 10vh) minmax(500px, 80vh) minmax(50px, 10vh); /*figure out exact later*/
+    grid-template-rows: minmax(50px, 10vh) auto minmax(50px, 8vh); /*figure out exact later*/
     flex-wrap: nowrap;
     margin: 0;
+    min-height: 100vh;
+    min-width: 600px;
 }
 
 #headerRibbon {
@@ -37,11 +40,12 @@ div {
     color: var(--ribbonTextColor);
     display: flex;
     align-items: center;
+    min-height: 8vh;
 }
 
 /*--------------------Header--------------------*/
 #headerRibbon img {
-    height: 100%;
+    height: min(70px, 8vw);
     width: auto;
     max-width: 100%;
 }
@@ -51,13 +55,23 @@ div {
     margin: 0 10px;
 }
 
+
 /*--------------------Frame--------------------*/
-#frameBody {
+#frameBody1 {
     background-color: var(--medSecondaryBg);
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 30px;
+    padding: 50px;
+}
+
+#frameBody2 {
+    background-color: var(--medSecondaryBg);
+    display: grid;
+    grid-template-rows: minmax(200px, 1fr) repeat(auto, 6);
+    align-items: start;
+    justify-content: center;
+    padding: 40px;
 }
 
 
@@ -67,6 +81,7 @@ div {
     flex-direction: column;
     align-items: center;
     margin-top: 20px;
+    width: fit-content;
 }
 
 .textInput label {
@@ -74,56 +89,68 @@ div {
 }
 
 #idSubmit {
-    margin-top: 20px;
+    margin-top: 30px;
     border: 1px solid var(--darkPrimaryBg);
     border-radius: 3px;
     background-color: var(--ribbonTextColor);
+    width: min(100px, 20vw);
+    height: 40px;
+    font-size: min(4vw, 22px);
 }
 
 #idSubmit:hover {
     background-color: var(--primaryTextColor);
-    box-shadow: 1px 1px 5px, -1px -1px 5px;
+    box-shadow: 1px 1px 5px black, -1px -1px 5px black;
+    
 }
 
 #idSubmit:active {
     background-color: var(--secondaryTextColor);   
+    box-shadow: 1px 1px 5px #111111, -1px -1px 5px #111111;
+    color: white;
 }
 
 
 
 /*--------------------Entered Data Screen--------------------*/
+
+
+/*Avatar*/
 #avatarDisplay {
     display: flex;
     justify-content: space-around;
-    border: 1px dashed magenta;
+    margin-bottom: 5vh;
 }
 
 .avatarNamePair {
     display: flex;
     flex-direction: column;
     align-items: center;
-    border: 1px dashed cyan;
-    margin: 0 15vw;
     width: fit-content;
 }
 
 .avatarNamePair label {
     margin-top: 5px;
-    font-size: min(2vw, 20px);
+    font-size: min(3vw, 20px);
 }
 
 .avatarBg {
     background-color: var(--darkPrimaryBg);
-    height: min(10vw, 120px);
-    width: min(10vw, 120px);
+    height: min(20vw, 120px);
+    width: min(20vw, 120px);
 }
 
 
-.gameBox {
+
+
+/*Game*/
+#gameBox {
     border: 1px solid white;
     display: flex;
     flex-direction: column;
-    width: min(30vw, 1000px);
+    margin: 10px;
+    width: 60vw;
+    min-width: 650px;
 }
 
 .gameTitleRibbon {
@@ -131,12 +158,88 @@ div {
     align-self: center;
 }
 
+
 .gameBoxBody {
     background-color: var(--lightPrimaryBg);
-    height: 200px;
+    height: fit-content;
+    padding: 20px 40px;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.playtime {
+    /*border: 1px solid red;*/
+
+    display: flex;
+    justify-content: space-evenly;
+    margin-bottom: 35px;
 }
 
 
+
+.achievementCount {
+    /*border: 1px solid green;*/
+    display: flex;
+    flex-direction: column;
+}
+
+.achievementCount > p {
+    align-self: center;
+    margin-bottom: 5px;
+}
+
+
+.achievementCountBox {
+    display: flex;
+    justify-content: space-evenly;
+    background-color: var(--medSecondaryBg);
+    margin-bottom: 25px;
+}
+
+
+
+
+.achievementListBox {
+    /*border: 1px dashed cyan;*/
+
+    background-color: var(--medSecondaryBg);
+    display: flex;
+    flex-direction: column;    
+    padding-top: 30px;
+}
+
+
+
+.listedAchievement {
+    border: 1px dashed yellowgreen;
+
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    margin: 0 30px 20px;
+    min-width: 510px;
+    min-height: 20px;
+    height: fit-content;
+}
+
+.listedAchievement img {
+    border: 1px solid white;
+    align-self: center;
+    margin: 0;
+    height: min(20px, 5vw);
+    
+    width: auto;
+    max-width: 100%;
+
+
+}
+
+.listedAchievement p {
+    border: 1px solid white;
+    align-self: center;
+    margin: 0;
+    height: min(20px, 5vw);
+}
 
 
 
