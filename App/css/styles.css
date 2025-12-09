@@ -26,6 +26,8 @@ div {
 
 
 
+
+
 #pageFrame { /*Header, Body, Footer: grid*/
     display: grid;
     grid-template-rows: minmax(50px, 10vh) auto minmax(50px, 8vh); /*figure out exact later*/
@@ -68,7 +70,7 @@ div {
 #frameBody2 {
     background-color: var(--medSecondaryBg);
     display: grid;
-    grid-template-rows: minmax(200px, 1fr) repeat(auto, 6);
+    grid-template-rows: minmax(200px, 1fr) 1000px;
     align-items: start;
     justify-content: center;
     padding: 40px;
@@ -149,13 +151,17 @@ div {
 
 
 
-
+.accordion {
+    color: var(--primaryTextColor);
+}
 
 /*Game*/
 #gameBox {
-    border: 1px solid white;
-    display: flex;
-    flex-direction: column;
+    border: 2px dashed cyan;
+    color: var(--ribbonTextColor);
+    /*display: flex;
+    flex-direction: column;*/
+
     margin: 10px;
     width: 60vw;
     min-width: 650px;
@@ -163,17 +169,18 @@ div {
 
 .gameTitleRibbon {
     background-color: var(--medSecondaryBg);
-    align-self: center;
+    /*align-self: center;*/
+
+    display: block;
 }
 
 
 .gameBoxBody {
     background-color: var(--lightPrimaryBg);
-    height: fit-content;
+    /*height: fit-content;*/
     padding: 20px 40px;
-    display: flex;
-    flex-direction: column;
-
+    /*display: flex;
+    flex-direction: column;*/
 }
 
 .playtime {
@@ -220,33 +227,33 @@ div {
 
 
 .listedAchievement {
-    border: 1px dashed yellowgreen;
+    /*border: 1px dashed yellowgreen;*/
 
     display: grid;
-    grid-template-columns: auto auto auto auto;
+    grid-template-columns: 5% auto 10% 10%;
     margin: 0 30px 20px;
     min-width: 510px;
-    min-height: 20px;
-    height: fit-content;
+    height: auto
 }
 
 .listedAchievement img {
-    border: 1px solid white;
+    /*border: 1px solid white;*/
     align-self: center;
     margin: 0;
     height: min(20px, 5vw);
     
     width: auto;
     max-width: 100%;
-
-
 }
 
+
 .listedAchievement p {
-    border: 1px solid white;
+    /*border: 1px solid white;*/
     align-self: center;
-    margin: 0;
-    height: min(20px, 5vw);
+    text-wrap: wrap;
+    margin: 0 10px;
+    padding: 0 8px;
+    /*height: min(20px, 5vw);             May not need this, working so far without*/
 }
 
 
