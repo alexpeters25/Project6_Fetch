@@ -24,6 +24,25 @@ div {
 }
 
 
+.darkPrimaryBg {
+    color: var(--darkPrimaryBg);
+}
+.secondaryTextColor {
+    color: var(--secondaryTextColor);
+}
+.medSecondaryBg {
+    color: var(--medSecondaryBg);
+}
+.lightPrimaryBg {
+    color: var(--lightPrimaryBg);
+}
+.primaryTextColor {
+    color: var(--primaryTextColor);
+}
+.ribbonTextColor {
+    color: var(--ribbonTextColor);
+}
+
 
 
 
@@ -69,10 +88,15 @@ div {
 
 #frameBody2 {
     background-color: var(--medSecondaryBg);
-    display: grid;
-    grid-template-rows: minmax(200px, 1fr) 1000px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    /*display: grid;
+    grid-template-rows: auto auto;
     align-items: start;
-    justify-content: center;
+    justify-content: center;*/
+    
     padding: 40px;
 }
 
@@ -118,10 +142,12 @@ div {
 
 
 /*Avatar*/
-#avatarDisplay {
+#avatarRow {
     display: flex;
     justify-content: space-around;
     margin-bottom: 5vh;
+    width: 60vw;
+    min-width: 650px;
 }
 
 .avatarNamePair {
@@ -155,14 +181,31 @@ div {
     color: var(--primaryTextColor);
 }
 
+.accordion-header, .acordion-item {
+    background-color: var(--medSecondaryBg);
+}
+
+
+.accordion-button {
+    background-color: var(--medSecondaryBg);
+    color: var(--ribbonTextColor);
+}
+.accordion-button:not(.collapsed) {
+    background-color: var(--medSecondaryBg);
+    color: var(--ribbonTextColor);
+}
+.accordion-button:after {
+    filter: invert(1);
+}
+
+
 /*Game*/
-#gameBox {
+.gameBox {
     border: 1px solid white;
     border-radius: 5px;
     color: var(--ribbonTextColor);
-    /*display: flex;
-    flex-direction: column;*/
-
+    display: flex;
+    flex-direction: column;
     margin: 10px;
     width: 60vw;
     min-width: 650px;
@@ -172,7 +215,6 @@ div {
     background-color: var(--medSecondaryBg);
     /*align-self: center;*/
 
-    display: block;
 }
 
 
@@ -180,8 +222,8 @@ div {
     background-color: var(--lightPrimaryBg);
     /*height: fit-content;*/
     padding: 20px 40px;
-    /*display: flex;
-    flex-direction: column;*/
+    display: flex;
+    flex-direction: column;
 }
 
 .playtime {
@@ -194,10 +236,13 @@ div {
 
 
 
+
+
 .achievementCount {
-    /*border: 1px solid green;*/
+    /*border: 3px solid magenta;*/
     display: flex;
     flex-direction: column;
+    margin-bottom: 30px;
 }
 
 .achievementCount > p {
@@ -205,24 +250,26 @@ div {
     margin-bottom: 5px;
 }
 
-
 .achievementCountBox {
+    border: 1px dashed magenta;
+
     display: flex;
     justify-content: space-evenly;
+    align-items: center;
     background-color: var(--medSecondaryBg);
-    margin-bottom: 25px;
+    padding: 10px 0;
 }
 
 
 
 
-.achievementListBox {
-    /*border: 1px dashed cyan;*/
 
+
+.achievementListBox {
+    border: 1px solid white;
     background-color: var(--medSecondaryBg);
     display: flex;
     flex-direction: column;    
-    padding-top: 30px;
 }
 
 
