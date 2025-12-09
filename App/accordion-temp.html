@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset = "UTF-8">
-        <title>Temp</title>
+        <title>Accord-Temp</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN">
         <link rel="stylesheet" href="css/styles.css">
         <script src="scripts/script.js"></script>
@@ -17,75 +17,69 @@
             <div id="frameBody2">
 
                 <!--Accordion-->
-                <div class="accordion" id="accordionParent">
-                    <div id="gameBox">
-                        <!--Accordion Item-->
-                        <div class="accordion-item" id="accordionParent">
-                            
-                                <!--Accordion Header--> 
-                                <h2 class="accordion-header gameTitleRibbon" id="firstHeading">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                        Game Name
-                                    </button>
-                                </h2>
-                                <!--Accordion Header END-->
-                                
-
-                                <!--Collapse-->
-                                <div id="collapseOne" class="accordion-collapse show" aria-labelledby="firstHeading" data-bs-parent="#accordionParent">
-                                    <!--Accordion Body-->
-                                    <div class="accordion-body gameBoxBody">
-                                        
-                                            <div class="playtime">
-                                                <p>Playtime #1</p>
-                                                <p><strong>Playtime</strong></p>
-                                                <p>Playtime #2</p>
-                                            </div>
-
-                                            <div class="achievementCount">
-                                                <p><strong>Achievements</strong></p>
-                                                <div class="achievementCountBox">
-                                                    <p>Completed #1</p>
-                                                    <p><strong>Completion</strong></p>
-                                                    <p>Completed #2</p>
-                                                </div>
-                                            </div>
-
-                                            <div class="achievementListBox">
-                                                <div class="listedAchievement">
-                                                    <img src="" alt="icon" id="iconAlt">
-                                                    <p>Achievement #1</p>
-                                                    <img src="images/checked.svg" alt="bubble">
-                                                    <img src="images/unchecked.svg" alt="bubble">
-                                                </div>
-                                                <div class="listedAchievement">
-                                                    <img src="" alt="icon" id="iconAlt">
-                                                    <p>Achievement #2 </p>
-                                                    <img src="images/unchecked.svg" alt="bubble">
-                                                    <img src="images/unchecked.svg" alt="bubble">
-                                                </div>
-                                                <div class="listedAchievement">
-                                                    <img src="" alt="icon" id="iconAlt">
-                                                    <p>Achievement #3</p>
-                                                    <img src="images/unchecked.svg" alt="bubble">
-                                                    <img src="images/unchecked.svg" alt="bubble">
-                                                </div>
-                        
-                                            </div>
-                                    </div>
-                                    <!--Accordion Body END-->
-
-                                </div>
-                                <!--Collapse END-->
+                <div class="accordion" id="accordionExample">
+                    <!--Accordion Item-->
+                    <div class="accordion-item">
+                        <!--Accordion Header-->
+                        <div class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                Game Name
+                            </button>
                         </div>
-                        <!--Accordion Item END-->
+                        <!--Accordion Header END-->
+
+                        <!--Collapse-->
+                        <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                            <!--Accordion Body-->
+                            <div class="accordion-body">
+                                <!--<p>Hello world</p>-->
+                                <div class="playtime">
+                                    <p>Playtime #1</p>
+                                    <p><strong>Playtime</strong></p>
+                                    <p>Playtime #2</p>
+                                </div>
+
+                                <div class="achievementCount">
+                                    <p><strong>Achievements</strong></p>
+                                    <div class="achievementCountBox">
+                                        <p>Completed #1</p>
+                                        <p><strong>Completion</strong></p>
+                                        <p>Completed #2</p>
+                                    </div>
+                                </div>
+
+                                <div class="achievementListBox">
+                                    <div class="listedAchievement">
+                                        <img src="" alt="icon" id="iconAlt">
+                                        <p>Achievement #1</p>
+                                        <img src="images/checked.svg" alt="bubble">
+                                        <img src="images/unchecked.svg" alt="bubble">
+                                    </div>
+                                    <div class="listedAchievement">
+                                        <img src="" alt="icon" id="iconAlt">
+                                        <p>Achievement #2 </p>
+                                        <img src="images/unchecked.svg" alt="bubble">
+                                        <img src="images/unchecked.svg" alt="bubble">
+                                    </div>
+                                    <div class="listedAchievement">
+                                        <img src="" alt="icon" id="iconAlt">
+                                        <p>Achievement #3</p>
+                                        <img src="images/unchecked.svg" alt="bubble">
+                                        <img src="images/unchecked.svg" alt="bubble">
+                                    </div>
+            
+                                </div>
+                            </div>
+                            <!--Accordion Body END-->
+
+                        </div>
+                        <!--Collapse END-->
+
                     </div>
+                    <!--Accordion Item END-->
+
                 </div>
                 <!--Accordion END-->
-
-
-
-
 
                 
 
@@ -95,6 +89,6 @@
 
 
 
-        
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
     </body>
 </html>

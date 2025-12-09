@@ -157,7 +157,8 @@ div {
 
 /*Game*/
 #gameBox {
-    border: 2px dashed cyan;
+    border: 1px solid white;
+    border-radius: 5px;
     color: var(--ribbonTextColor);
     /*display: flex;
     flex-direction: column;*/
