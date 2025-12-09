@@ -25,8 +25,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     
 
     let schemaResponse = await GetSchemaForGame(key, 440);
-    gameName = schemaResponse.gameName;
-    gameAchievements = schemaResponse.gameAchievements;
+    let gameName = schemaResponse.gameName;
+    let gameAchievements = schemaResponse.gameAchievements;
     console.log("SCHEMA");
     console.log(gameName);
     console.log(gameAchievements);
@@ -35,6 +35,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     let userAchievements = await GetPlayerAchievements(key, tstId, 440);
     console.log("TF2 ACHIEVEMENTS");
     console.log(userAchievements);
+
+    let gameIcon = await GetGameIcon(440);
+    console.log("TF2 ICON");
+    console.log(gameIcon);
 });
 
 
@@ -48,8 +52,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 // Returns an array of owned games; owned games are objects; contain appid, playtime_forever (stored in minutes)
 async function GetOwnedGames(key, steamId){
     let link = `http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${key}&steamid=${steamId}&include_played_free_games&format=json`;
-    gamesData = await FetchAPI(link);
-    games = gamesData.response.games;
+    let gamesData = await FetchAPI(link);
+    let games = gamesData.response.games;
     return games;
 }
 
@@ -57,10 +61,10 @@ async function GetOwnedGames(key, steamId){
 // Returns userAvatar and userName as object; user avatar is a link stored as str, userName is an str
 async function GetPlayerSummary(key, steamId){
     let link = `http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${key}&steamids=${steamId}`;
-    playerSummary = await FetchAPI(link);
+    let playerSummary = await FetchAPI(link);
     playerSummary = playerSummary.response.players[0]
-    userAvatar = playerSummary.avatarfull;
-    userName = playerSummary.personaname;
+    let userAvatar = playerSummary.avatarfull;
+    let userName = playerSummary.personaname;
     return {userAvatar, userName};
 }
 
@@ -70,9 +74,9 @@ async function GetPlayerSummary(key, steamId){
 // Returns a string containing the name of the game
 async function GetSchemaForGame(key, appId){
     let link = `https://api.steampowered.com/ISteamUserStats/GetSchemaForGame/v2/?key=${key}&appid=${appId}`;
-    gameSchema = await FetchAPI(link);
-    gameAchievements = gameSchema.game.availableGameStats.achievements;
-    gameName = gameSchema.game.gameName;
+    let gameSchema = await FetchAPI(link);
+    let gameAchievements = gameSchema.game.availableGameStats.achievements;
+    let gameName = gameSchema.game.gameName;
     return {gameName, gameAchievements};
 }
 
@@ -80,12 +84,20 @@ async function GetSchemaForGame(key, appId){
 // Returns a list of achievements objects for achievments for the specified game; objects contain apiname, acheived (1 for achieved), and unlocktime as potentially important values
 async function GetPlayerAchievements(key, steamId, appId){
     let link = `http://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid=${appId}&key=${key}&steamid=${steamId}`;
-    playerAchievements = await FetchAPI(link);
-    achievements = playerAchievements.playerstats.achievements;
-    console.log(playerAchievements);
-    return playerAchievements;
+    let playerAchievements = await FetchAPI(link);
+    let achievements = playerAchievements.playerstats.achievements;
+    
+    return achievements;
 }
 
+// Accepts appid
+// Returns game icon
+async function GetGameIcon(appid){
+    let link = `https://store.steampowered.com/api/appdetails?appids=${appid}`;
+    let gameInfo = await FetchAPI(link);
+    let gameIcon = gameInfo[appid].data.capsule_image;
+    return gameIcon;
+}
 
 
 // generic API function; accepts a link, returns a json file
