@@ -24,6 +24,27 @@ div {
 }
 
 
+.darkPrimaryBg {
+    color: var(--darkPrimaryBg);
+}
+.secondaryTextColor {
+    color: var(--secondaryTextColor);
+}
+.medSecondaryBg {
+    color: var(--medSecondaryBg);
+}
+.lightPrimaryBg {
+    color: var(--lightPrimaryBg);
+}
+.primaryTextColor {
+    color: var(--primaryTextColor);
+}
+.ribbonTextColor {
+    color: var(--ribbonTextColor);
+}
+
+
+
 
 
 #pageFrame { /*Header, Body, Footer: grid*/
@@ -67,10 +88,15 @@ div {
 
 #frameBody2 {
     background-color: var(--medSecondaryBg);
-    display: grid;
-    grid-template-rows: minmax(200px, 1fr) repeat(auto, 6);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    /*display: grid;
+    grid-template-rows: auto auto;
     align-items: start;
-    justify-content: center;
+    justify-content: center;*/
+    
     padding: 40px;
 }
 
@@ -116,10 +142,12 @@ div {
 
 
 /*Avatar*/
-#avatarDisplay {
+#avatarRow {
     display: flex;
     justify-content: space-around;
     margin-bottom: 5vh;
+    width: 60vw;
+    min-width: 650px;
 }
 
 .avatarNamePair {
@@ -140,12 +168,42 @@ div {
     width: min(20vw, 120px);
 }
 
+.avatarBg > img {
+    height: min(20vw, 120px);
+    width: min(20vw, 120px);
+    
+}
 
+
+
+
+.accordion {
+    color: var(--primaryTextColor);
+}
+
+.accordion-header, .acordion-item {
+    background-color: var(--medSecondaryBg);
+}
+
+
+.accordion-button {
+    background-color: var(--medSecondaryBg);
+    color: var(--ribbonTextColor);
+}
+.accordion-button:not(.collapsed) {
+    background-color: var(--medSecondaryBg);
+    color: var(--ribbonTextColor);
+}
+.accordion-button:after {
+    filter: invert(1);
+}
 
 
 /*Game*/
-#gameBox {
+.gameBox {
     border: 1px solid white;
+    border-radius: 5px;
+    color: var(--ribbonTextColor);
     display: flex;
     flex-direction: column;
     margin: 10px;
@@ -155,17 +213,17 @@ div {
 
 .gameTitleRibbon {
     background-color: var(--medSecondaryBg);
-    align-self: center;
+    /*align-self: center;*/
+
 }
 
 
 .gameBoxBody {
     background-color: var(--lightPrimaryBg);
-    height: fit-content;
+    /*height: fit-content;*/
     padding: 20px 40px;
     display: flex;
     flex-direction: column;
-
 }
 
 .playtime {
@@ -178,10 +236,13 @@ div {
 
 
 
+
+
 .achievementCount {
-    /*border: 1px solid green;*/
+    /*border: 3px solid magenta;*/
     display: flex;
     flex-direction: column;
+    margin-bottom: 30px;
 }
 
 .achievementCount > p {
@@ -189,56 +250,58 @@ div {
     margin-bottom: 5px;
 }
 
-
 .achievementCountBox {
+    border: 1px dashed magenta;
+
     display: flex;
     justify-content: space-evenly;
+    align-items: center;
     background-color: var(--medSecondaryBg);
-    margin-bottom: 25px;
+    padding: 10px 0;
 }
+
+
 
 
 
 
 .achievementListBox {
-    /*border: 1px dashed cyan;*/
-
+    border: 1px solid white;
     background-color: var(--medSecondaryBg);
     display: flex;
     flex-direction: column;    
-    padding-top: 30px;
 }
 
 
 
 .listedAchievement {
-    border: 1px dashed yellowgreen;
+    /*border: 1px dashed yellowgreen;*/
 
     display: grid;
-    grid-template-columns: auto auto auto auto;
+    grid-template-columns: 5% auto 10% 10%;
     margin: 0 30px 20px;
     min-width: 510px;
-    min-height: 20px;
-    height: fit-content;
+    height: auto
 }
 
 .listedAchievement img {
-    border: 1px solid white;
+    /*border: 1px solid white;*/
     align-self: center;
     margin: 0;
     height: min(20px, 5vw);
     
     width: auto;
     max-width: 100%;
-
-
 }
 
+
 .listedAchievement p {
-    border: 1px solid white;
+    /*border: 1px solid white;*/
     align-self: center;
-    margin: 0;
-    height: min(20px, 5vw);
+    text-wrap: wrap;
+    margin: 0 10px;
+    padding: 0 8px;
+    /*height: min(20px, 5vw);             May not need this, working so far without*/
 }
 
 
