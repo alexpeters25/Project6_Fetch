@@ -23,6 +23,25 @@ div {
 }
 
 
+a {
+    text-decoration: none;
+    color: inherit;
+    padding: 3px 5px;
+}
+p a:hover {
+    background-color: var(--secondaryTextColor);
+    border-radius: 3px;
+    color: var(--ribbonTextColor);
+    padding: 3px 5px;
+}
+
+p > .active {
+    text-decoration: underline;
+    color: var(--secondaryTextColor);
+    font-weight: 500;
+}
+
+
 /*Helps override the default bootstrap settings*/
 .darkPrimaryBg {
     color: var(--darkPrimaryBg);
