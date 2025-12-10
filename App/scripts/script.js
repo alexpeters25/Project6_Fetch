@@ -1,11 +1,32 @@
 document.addEventListener('DOMContentLoaded', async () => {
+    
+    
+    
+    
     // initial variable declaration
     const key = "278985C45F75E625318400A6BC376ACD";
+
+    // Start of Regular JS
+    const initialScreen = document.querySelector("#page1");
+    const dataScreen = document.querySelector("#page2");
+    const enter = document.querySelector("#idSubmit");
+
+    enter.addEventListener("click", () => {
+        //e.preventDefault();
+        const yourID = document.querySelector("#yourID").value;
+        const otherID = document.querySelector("#otherID").value;
+
+        console.log("yourID: " + yourID);
+        console.log("otherID: " + otherID);
+
+        initialScreen.className = "isHidden";
+        dataScreen.className = "isVisible";
+    });
 
 
 
     // Testing
-    let tstId = "76561199073557362";
+    /*let tstId = "76561199073557362";
     
 
     let games = await GetOwnedGames(key, tstId);
@@ -36,12 +57,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     let gameIcon = await GetGameIcon(440);
     console.log("TF2 ICON");
     console.log(gameIcon);
-
-    // Start of Regular JS
-
-    
-
-
+    */
 
 
 });
