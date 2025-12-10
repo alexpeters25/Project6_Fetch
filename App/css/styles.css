@@ -42,6 +42,14 @@ p > .active {
 }
 
 
+.isHidden {
+    display: none;
+}
+.isVisible {
+    display: block;
+}
+
+
 /*Helps override the default bootstrap settings*/
 .darkPrimaryBg {
     color: var(--darkPrimaryBg);

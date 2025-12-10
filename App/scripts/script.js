@@ -4,9 +4,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
 
-
-
-
     // Testing
     let tstId = "76561199073557362";
     
@@ -39,6 +36,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     let gameIcon = await GetGameIcon(440);
     console.log("TF2 ICON");
     console.log(gameIcon);
+
+    // Start of Regular JS
+
+    
+
+
+
+
 });
 
 
