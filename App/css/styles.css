@@ -145,7 +145,7 @@ p > .active {
 #idSubmit {
     margin-top: 30px;
     border: 1px solid var(--darkPrimaryBg);
-    border-radius: 3px;
+    border-radius: 5px;
     background-color: var(--ribbonTextColor);
     width: min(100px, 20vw);
     height: 40px;
@@ -191,7 +191,7 @@ p > .active {
 }
 
 .avatarBg {
-    background-color: var(--darkPrimaryBg);
+    background-color: inherit;
     height: min(20vw, 120px);
     width: min(20vw, 120px);
 }
@@ -199,12 +199,13 @@ p > .active {
 .avatarBg > img {
     height: min(20vw, 120px);
     width: min(20vw, 120px);
+    border-radius: 10px;
     
 }
 
 
 
-
+/*Accordion*/
 .accordion {
     color: var(--primaryTextColor);
 }
