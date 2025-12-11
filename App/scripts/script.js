@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const initialScreen = document.querySelector("#page1");
     const dataScreen = document.querySelector("#page2");
     const enter = document.querySelector("#idSubmit");
-
+    /*
     enter.addEventListener("click", () => {
         //e.preventDefault();
         const yourID = document.querySelector("#yourID").value;
@@ -19,13 +19,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         initialScreen.className = "isHidden";
         dataScreen.className = "isVisible";
     });
+    */
 
 
-
-    // Testing
-    /*let tstId = "76561199073557362";
-    
-
+    // testing
+    let tstId = "76561199073557362";
+    /*
     let games = await GetOwnedGames(key, tstId);
     console.log("GAMES");
     console.log(games);
@@ -54,12 +53,44 @@ document.addEventListener('DOMContentLoaded', async () => {
     let gameIcon = await GetGameIcon(440);
     console.log("TF2 ICON");
     console.log(gameIcon);
-    */
+    */ 
 
-
+    // compareLibraries testing
+    // let tstIdTwo = "76561199214605508"
+    // let games = await GetOwnedGames(key, tstId);
+    // let gamesTwo = await GetOwnedGames(key, tstIdTwo);
+    // let commonGames = compareLibraries(games, gamesTwo);
+    // console.log(commonGames);
+    // let commonSchema = [];
+    // for (let i=0; i<commonGames.length; i++){
+    //     let gameSchema = await GetSchemaForGame(key, commonGames[i].appid);
+    //     commonSchema.push(gameSchema);
+    // }
+    // console.log(commonSchema);
 });
 
 
+// accepts two libraries returns a list of games they have in common
+function compareLibraries(libraryOne, libraryTwo){
+    let shorterLibrary;
+    let longerLibrary;
+    if (libraryOne.length > libraryTwo.length){
+        shorterLibrary = libraryTwo;
+        longerLibrary = libraryOne;
+    } else{
+        shorterLibrary = libraryOne;
+        longerLibrary = libraryTwo;
+    }
+    let commonGames = [];
+    for (let indexLong = 0; indexLong < longerLibrary.length; indexLong++){
+        for (let indexShort = 0; indexShort < shorterLibrary.length; indexShort++){
+            if (shorterLibrary[indexShort].appid === longerLibrary[indexLong].appid){
+                commonGames.push(shorterLibrary[indexShort])
+            }
+        }
+    }
+    return commonGames;
+}
 
 
 
@@ -93,7 +124,12 @@ async function GetPlayerSummary(key, steamId){
 async function GetSchemaForGame(key, appId){
     let link = `https://api.steampowered.com/ISteamUserStats/GetSchemaForGame/v2/?key=${key}&appid=${appId}`;
     let gameSchema = await FetchAPI(link);
-    let gameAchievements = gameSchema.game.availableGameStats.achievements;
+    let gameAchievements;
+    try{
+        gameAchievements = gameSchema.game.availableGameStats.achievements;
+    } catch{
+        gameAchievements = null
+    }
     let gameName = gameSchema.game.gameName;
     return {gameName, gameAchievements};
 }
