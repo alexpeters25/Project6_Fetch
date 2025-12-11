@@ -131,3 +131,14 @@ async function FetchAPI(link){
         console.log(error);
     }
 }
+
+
+
+
+
+
+
+// html generation functions
+async function loadGame() {
+
+}
