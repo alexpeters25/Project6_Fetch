@@ -1,12 +1,9 @@
 document.addEventListener('DOMContentLoaded', async () => {
     
-    
-    
-    
     // initial variable declaration
     const key = "278985C45F75E625318400A6BC376ACD";
 
-    // Start of Regular JS
+    // Page Nav functionality
     const initialScreen = document.querySelector("#page1");
     const dataScreen = document.querySelector("#page2");
     const enter = document.querySelector("#idSubmit");
