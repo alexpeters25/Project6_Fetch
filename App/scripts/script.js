@@ -228,7 +228,7 @@ function loadGameAccordion(gamesArray, achievementsArray) { //still needs data t
             const divL8 = document.createElement("div");
             
 
-            //set data
+            //##############################set data##############################
             loadGameAchievements(achievementsArray, divL8)
 
             pL6a.textContent = "Playtime #1";
