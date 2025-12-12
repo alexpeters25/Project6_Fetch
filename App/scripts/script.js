@@ -95,6 +95,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
 // Accepts: key, steam ID, steam ID
+// Returns: Player one info, player two info, library, achievements for player one, achievements for player two, achivement info, game icons
 async function FetchInformation(key, idOne, idTwo){
     // grab player information
     // OBJECTS: .userAvatar and .userName 
