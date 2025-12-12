@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const enter = document.querySelector("#idSubmit");
     
     
-    enter.addEventListener("click", () => {
+    enter.addEventListener("click", async() => {
         //e.preventDefault(); //I forget if we need to prevent default here, so far doesn't appear to need it
         const yourID = document.querySelector("#yourID").value;
         const otherID = document.querySelector("#otherID").value;
@@ -17,17 +17,20 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.log("yourID: " + yourID);
         console.log("otherID: " + otherID);
 
+        const [userOneInfo, userTwoInfo, gameArray, achievementsOne, achievementsTwo, achvGameArray, gameIcons] = await FetchInformation(key, yourID, otherID);
+        
+
         initialScreen.className = "isHidden";
         dataScreen.className = "isVisible";
 
-
-
+        // Comments on generated variables in FetchInformation
+        
         //html generator test arrays
-        const gameArray = ['game1', 'game2', 'game3', 'game4'] //gameArray needs to end up as an array of the game objects
-        const achvGameArray = [['achv1', 'achv2', 'achv3', 'achv4'], //achvGameArray needs to end up as a 3d array with its achievements array in the same index as the game in gameArray
-                                ['achv1', 'achv2', 'achv3', 'achv4'], 
-                                ['achv1', 'achv2', 'achv3', 'achv4'],
-                                ['achv1', 'achv2', 'achv3', 'achv4']];
+        // const gameArray = ['game1', 'game2', 'game3', 'game4'] //gameArray needs to end up as an array of the game objects
+        // const achvGameArray = [['achv1', 'achv2', 'achv3', 'achv4'], //achvGameArray needs to end up as a 3d array with its achievements array in the same index as the game in gameArray
+        //                         ['achv1', 'achv2', 'achv3', 'achv4'], 
+        //                         ['achv1', 'achv2', 'achv3', 'achv4'],
+        //                         ['achv1', 'achv2', 'achv3', 'achv4']];
         
         
         //Loads and sets the data into html
@@ -91,8 +94,53 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 
+// Accepts: key, steam ID, steam ID
+// Returns: Player one info, player two info, library, achievements for player one, achievements for player two, achivement info, game icons
+async function FetchInformation(key, idOne, idTwo){
+    // grab player information
+    // OBJECTS: .userAvatar and .userName 
+
+    const playerInfoOne = await GetPlayerSummary(key, idOne);
+    const playerInfoTwo = await GetPlayerSummary(key, idTwo);
+
+
+    // Grab all games for each player
+
+    const libraryOne = await GetOwnedGames(key, idOne);
+    const libraryTwo = await GetOwnedGames(key, idTwo);
+
+
+    // Compare libraries
+
+    // OBJECTS: appid, playtime_forever (measured in minutes)
+
+    const collectiveLibrary = CompareLibraries(libraryOne, libraryTwo);
+
+
+    // ACHIEVEMENT OBJECTS: apiname, achieved, unlocktime
+    // GAMESCHEMA OBJECTS: gameAchievements, gameName
+        // GAMEACHIEVEMENT OBJECTS objects (child of gameSchema): name (shows apiname), displayName, icon, icongray
+    // game Icons is a list of links
+
+    let achievementsOne = [];
+    let achievementsTwo = [];
+    let gameIcons = [];
+    let gameSchema = [];
+
+    // sift through library to collect info on both
+    for (let i = 0; i < collectiveLibrary.length; i++){
+        achievementsOne.push(await GetPlayerAchievements(key, idOne, collectiveLibrary[i].appid));
+        achievementsTwo.push(await GetPlayerAchievements(key, idTwo, collectiveLibrary[i].appid));
+        gameIcons.push(await GetGameIcon(collectiveLibrary[i].appid));
+        gameSchema.push(await GetSchemaForGame(key, collectiveLibrary[i].appid));
+    }
+    console.log([playerInfoOne, playerInfoTwo, collectiveLibrary, achievementsOne, achievementsTwo, gameSchema, gameIcons]);
+    return [playerInfoOne, playerInfoTwo, collectiveLibrary, achievementsOne, achievementsTwo, gameSchema, gameIcons];
+}
+
+
 // accepts two libraries returns a list of games they have in common
-function compareLibraries(libraryOne, libraryTwo){
+function CompareLibraries(libraryOne, libraryTwo){
     let shorterLibrary;
     let longerLibrary;
     if (libraryOne.length > libraryTwo.length){
@@ -103,9 +151,11 @@ function compareLibraries(libraryOne, libraryTwo){
         longerLibrary = libraryTwo;
     }
     let commonGames = [];
+    // ADD IGNORED IDS
+    let ignoredAppIds = [422450, 1422450];
     for (let indexLong = 0; indexLong < longerLibrary.length; indexLong++){
         for (let indexShort = 0; indexShort < shorterLibrary.length; indexShort++){
-            if (shorterLibrary[indexShort].appid === longerLibrary[indexLong].appid){
+            if (shorterLibrary[indexShort].appid === longerLibrary[indexLong].appid && !ignoredAppIds.includes(shorterLibrary[indexShort].appid)){
                 commonGames.push(shorterLibrary[indexShort])
             }
         }
@@ -146,12 +196,17 @@ async function GetSchemaForGame(key, appId){
     let link = `https://api.steampowered.com/ISteamUserStats/GetSchemaForGame/v2/?key=${key}&appid=${appId}`;
     let gameSchema = await FetchAPI(link);
     let gameAchievements;
+    let gameName;
     try{
         gameAchievements = gameSchema.game.availableGameStats.achievements;
     } catch{
         gameAchievements = null
     }
-    let gameName = gameSchema.game.gameName;
+    try{
+        gameName = gameSchema.game.gameName;
+    } catch {
+        gameName = null;
+    }
     return {gameName, gameAchievements};
 }
 
@@ -159,8 +214,13 @@ async function GetSchemaForGame(key, appId){
 // Returns a list of achievements objects for achievments for the specified game; objects contain apiname, acheived (1 for achieved), and unlocktime as potentially important values
 async function GetPlayerAchievements(key, steamId, appId){
     let link = `http://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid=${appId}&key=${key}&steamid=${steamId}`;
-    let playerAchievements = await FetchAPI(link);
-    let achievements = playerAchievements.playerstats.achievements;
+    let achievements;
+    try{
+        let playerAchievements = await FetchAPI(link);
+        achievements = playerAchievements.playerstats.achievements;
+    } catch{
+        achievements = [];
+    }
     
     return achievements;
 }
@@ -169,8 +229,14 @@ async function GetPlayerAchievements(key, steamId, appId){
 // Returns game icon
 async function GetGameIcon(appid){
     let link = `https://store.steampowered.com/api/appdetails?appids=${appid}`;
-    let gameInfo = await FetchAPI(link);
-    let gameIcon = gameInfo[appid].data.capsule_image;
+    let gameInfo;
+    let gameIcon
+    try {
+        gameInfo = await FetchAPI(link);
+        gameIcon = gameInfo[appid].data.capsule_image;
+    } catch{
+        gameIcon = null;
+    }
     return gameIcon;
 }
 
