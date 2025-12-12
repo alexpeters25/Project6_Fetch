@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const initialScreen = document.querySelector("#page1");
     const dataScreen = document.querySelector("#page2");
     const enter = document.querySelector("#idSubmit");
-    /*
+    
     enter.addEventListener("click", () => {
         //e.preventDefault();
         const yourID = document.querySelector("#yourID").value;
@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         btnChangeAll();
         
     });
-    */
+    
 
     
 
