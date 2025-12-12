@@ -24,10 +24,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         //html generator test arrays
         const gameArray = ['game1', 'game2', 'game3', 'game4'] //gameArray needs to end up as an array of the game objects
-        const achvGameArray = [['achv1', 'achv2', 'achv3', 'achv4'], //achvGameArray needs to end up as a 2d array with its achievements array in the same index as the game in gameArray
+        const achvGameArray = [['achv1', 'achv2', 'achv3', 'achv4'], //achvGameArray needs to end up as a 3d array with its achievements array in the same index as the game in gameArray
+                                ['achv1', 'achv2', 'achv3', 'achv4'], 
                                 ['achv1', 'achv2', 'achv3', 'achv4'],
-                                ['achv1', 'achv2', 'achv3', 'achv4'],
-                                ['achv1', 'achv2', 'achv3', 'achv4']]
+                                ['achv1', 'achv2', 'achv3', 'achv4']];
         
         
         //Loads and sets the data into html
@@ -191,7 +191,7 @@ async function FetchAPI(link){
 
 
 //html generation
-function loadGameAccordion(gamesArray, achievementsArray) { //still needs data to be set
+function loadGameAccordion(gamesArray, achievementsArray, gameIconArray) { //still needs data to be set
     var gameCount = 0;
     const divFrameBody2 = document.querySelector("#frameBody2");
     for (game of gamesArray) {
