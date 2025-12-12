@@ -8,8 +8,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     const dataScreen = document.querySelector("#page2");
     const enter = document.querySelector("#idSubmit");
     
+    
     enter.addEventListener("click", () => {
-        //e.preventDefault();
+        //e.preventDefault(); //I forget if we need to prevent default here, so far doesn't appear to need it
         const yourID = document.querySelector("#yourID").value;
         const otherID = document.querySelector("#otherID").value;
 
@@ -21,15 +22,17 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
 
-        //generator test
-        const gameArray = ['game1', 'game2', 'game3', 'game4']
-        const achvGameArray = [['achv1', 'achv2', 'achv3', 'achv4'],
+        //html generator test arrays
+        const gameArray = ['game1', 'game2', 'game3', 'game4'] //gameArray needs to end up as an array of the game objects
+        const achvGameArray = [['achv1', 'achv2', 'achv3', 'achv4'], //achvGameArray needs to end up as a 2d array with its achievements array in the same index as the game in gameArray
                                 ['achv1', 'achv2', 'achv3', 'achv4'],
                                 ['achv1', 'achv2', 'achv3', 'achv4'],
                                 ['achv1', 'achv2', 'achv3', 'achv4']]
+        
+        
+        //Loads and sets the data into html
         loadGameAccordion(gameArray, achvGameArray);
         
-
 
 
         btnChangeAll();
@@ -231,19 +234,21 @@ function loadGameAccordion(gamesArray, achievementsArray) { //still needs data t
             //##############################set data##############################
             loadGameAchievements(achievementsArray, divL8)
 
-            pL6a.textContent = "Playtime #1";
+            pL6a.textContent = "Playtime #1"; //User1's playtime_forever for game of gamesArray
             pL6b.innerHTML = "<strong>Playtime</strong>";
-            pL6c.textContent = "Playtime #2";
+            pL6c.textContent = "Playtime #2"; //User2's playtime_forever for game of gamesArray
 
             pL6d.innerHTML = "<strong>Achievements</strong>";
 
 
-            pL7a.textContent = "Completion #1";
+            pL7a.textContent = "Completion #1"; //User1's completed achvmnts / total achvmnts for game of gamesArray
             pL7b.innerHTML = "<strong>Completion</strong>";
-            pL7c.textContent = "Completion #2";
+            pL7c.textContent = "Completion #2"; //User2's completed achvmnts / total achvmnts for game of gamesArray
 
 
 
+
+            //##############################set data END##############################
 
             //set classes and id's
             divL0.className = "accordion";
@@ -387,10 +392,10 @@ function loadGameAchievements(achievementsArray, gameDivL8) {
             achvIcon.src = achvIconURL;
             achvIcon.alt = "icon";
 
-            achvName.textContent = "Achievement #" + (achvCount + 1);
+            achvName.textContent = "Achievement #" + (achvCount + 1); //Name of the achievement
 
-            yourCompletion.src = "./images/unchecked.svg";
-            otherCompletion.src = "./images/checked.svg";
+            yourCompletion.src = "./images/unchecked.svg"; //for User1: checked.svg if achv is complete, unchecked.svg if achv isn't
+            otherCompletion.src = "./images/checked.svg"; //for User2: checked.svg if achv is complete, unchecked.svg if achv isn't
 
             
             //set class
