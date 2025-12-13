@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         
         
         //Loads and sets the data into html
-        loadGameAccordion(gameArray, achvGameArray);
+        loadGameAccordion(gameArray, achvGameArray, userOneInfo, userTwoInfo, achievementsOne, achievementsTwo);
         
 
 
@@ -48,6 +48,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // testing
     let tstId = "76561199073557362";
+    let tstID2 = "76561199268185945";
     /*
     let games = await GetOwnedGames(key, tstId);
     console.log("GAMES");
@@ -127,15 +128,20 @@ async function FetchInformation(key, idOne, idTwo){
     let gameIcons = [];
     let gameSchema = [];
 
-    // sift through library to collect info on both
-    for (let i = 0; i < collectiveLibrary.length; i++){
-        achievementsOne.push(await GetPlayerAchievements(key, idOne, collectiveLibrary[i].appid));
-        achievementsTwo.push(await GetPlayerAchievements(key, idTwo, collectiveLibrary[i].appid));
-        gameIcons.push(await GetGameIcon(collectiveLibrary[i].appid));
-        gameSchema.push(await GetSchemaForGame(key, collectiveLibrary[i].appid));
+    try {
+        // sift through library to collect info on both
+        for (let i = 0; i < collectiveLibrary.length; i++){
+            achievementsOne.push(await GetPlayerAchievements(key, idOne, collectiveLibrary[i].appid));
+            achievementsTwo.push(await GetPlayerAchievements(key, idTwo, collectiveLibrary[i].appid));
+            gameIcons.push(await GetGameIcon(collectiveLibrary[i].appid));
+            gameSchema.push(await GetSchemaForGame(key, collectiveLibrary[i].appid));
+        }
+        console.log([playerInfoOne, playerInfoTwo, collectiveLibrary, achievementsOne, achievementsTwo, gameSchema, gameIcons]);
+
+        return [playerInfoOne, playerInfoTwo, collectiveLibrary, achievementsOne, achievementsTwo, gameSchema, gameIcons];
+    } catch(error) {
+        console.log("FetchInfo Error: " + error);
     }
-    console.log([playerInfoOne, playerInfoTwo, collectiveLibrary, achievementsOne, achievementsTwo, gameSchema, gameIcons]);
-    return [playerInfoOne, playerInfoTwo, collectiveLibrary, achievementsOne, achievementsTwo, gameSchema, gameIcons];
 }
 
 
@@ -143,24 +149,28 @@ async function FetchInformation(key, idOne, idTwo){
 function CompareLibraries(libraryOne, libraryTwo){
     let shorterLibrary;
     let longerLibrary;
-    if (libraryOne.length > libraryTwo.length){
-        shorterLibrary = libraryTwo;
-        longerLibrary = libraryOne;
-    } else{
-        shorterLibrary = libraryOne;
-        longerLibrary = libraryTwo;
-    }
-    let commonGames = [];
-    // ADD IGNORED IDS
-    let ignoredAppIds = [422450, 1422450];
-    for (let indexLong = 0; indexLong < longerLibrary.length; indexLong++){
-        for (let indexShort = 0; indexShort < shorterLibrary.length; indexShort++){
-            if (shorterLibrary[indexShort].appid === longerLibrary[indexLong].appid && !ignoredAppIds.includes(shorterLibrary[indexShort].appid)){
-                commonGames.push(shorterLibrary[indexShort])
+    try {
+        if (libraryOne.length > libraryTwo.length){
+            shorterLibrary = libraryTwo;
+            longerLibrary = libraryOne;
+        } else{
+            shorterLibrary = libraryOne;
+            longerLibrary = libraryTwo;
+        }
+        let commonGames = [];
+        // ADD IGNORED IDS
+        let ignoredAppIds = [422450, 1422450, 320, 623990];
+        for (let indexLong = 0; indexLong < longerLibrary.length; indexLong++){
+            for (let indexShort = 0; indexShort < shorterLibrary.length; indexShort++){
+                if (shorterLibrary[indexShort].appid === longerLibrary[indexLong].appid && !ignoredAppIds.includes(shorterLibrary[indexShort].appid)){
+                    commonGames.push(shorterLibrary[indexShort])
+                }
             }
         }
+        return commonGames;
+    } catch(error) {
+        console.log("CompareLibaries error: " + error);
     }
-    return commonGames;
 }
 
 
@@ -257,11 +267,30 @@ async function FetchAPI(link){
 
 
 //html generation
-function loadGameAccordion(gamesArray, achievementsArray, gameIconArray) { //still needs data to be set
+function loadGameAccordion(gamesArray, achievementsArray, userOneInfo, userTwoInfo, achievementsOne, achievementsTwo) { //still needs data to be set
     var gameCount = 0;
     const divFrameBody2 = document.querySelector("#frameBody2");
+
+
+    //Access avatarRow elements
+    const userOneImg = document.querySelector("#userOneImg");
+    const userTwoImg = document.querySelector("#userTwoImg");
+
+    const userOneName = document.querySelector('label[for="avatar1"]');
+    const userTwoName = document.querySelector('label[for="avatar2"]');
+
+
+    //Set data for avatarRow elements
+    userOneImg.src = userOneInfo.userAvatar;
+    userTwoImg.src = userTwoInfo.userAvatar;
+
+    userOneName.textContent = userOneInfo.userName;
+    userTwoName.textContent = userTwoInfo.userName;
+
+
     for (game of gamesArray) {
         if (gameCount < gamesArray.length) { 
+            console.log("game:" + game);
             //create elements
             const divL0 = document.createElement("div");
             const divL1 = document.createElement("div");
@@ -298,9 +327,11 @@ function loadGameAccordion(gamesArray, achievementsArray, gameIconArray) { //sti
             
 
             //##############################set data##############################
-            loadGameAchievements(achievementsArray, divL8)
+            loadGameAchievements(achievementsArray, divL8, achievementsOne, achievementsTwo, gameCount)
 
-            pL6a.textContent = "Playtime #1"; //User1's playtime_forever for game of gamesArray
+            buttonL4.textContent = achievementsArray[gameCount].gameName;
+
+            pL6a.textContent = game.playtime_forever; //User1's playtime_forever for game of gamesArray
             pL6b.innerHTML = "<strong>Playtime</strong>";
             pL6c.textContent = "Playtime #2"; //User2's playtime_forever for game of gamesArray
 
@@ -336,7 +367,7 @@ function loadGameAccordion(gamesArray, achievementsArray, gameIconArray) { //sti
             buttonL4.setAttribute("data-bs-target", ("#collapse" + gameCount));
             buttonL4.setAttribute("aria-expanded", "true");
             buttonL4.setAttribute("aria-controls", ("collapse" + gameCount));
-            buttonL4.textContent = "Game #" + (gameCount + 1);
+            //buttonL4.textContent = "Game #" + (gameCount + 1);
 
 
             divL3.classList.add("accordion-collapse", "collapse"); //collapse or show for testing
@@ -441,42 +472,48 @@ function loadGameAccordion(gamesArray, achievementsArray, gameIconArray) { //sti
     divFrameBody2.appendChild(btnChangeAll);
 }
 
-function loadGameAchievements(achievementsArray, gameDivL8) {
+function loadGameAchievements(achievementsArray, divL8, achievementsOne, achievementsTwo, gameCount) {
     var achvCount = 0;
-    for (achv of achievementsArray) {
-            if (achvCount < achievementsArray.length) {
-            const achvIconURL = "./images/blank-user-profile.png"; //[achv.icon] //whatever the attribute is to retrieve the achievement's icon
-            //create elements
-            const divL0 = document.createElement("div");
-            
-            const achvIcon = document.createElement("img");
-            const achvName = document.createElement("p");
-            const yourCompletion = document.createElement("img");
-            const otherCompletion = document.createElement("img");
+    for (achv of achievementsArray[gameCount].gameAchievements) {
+            console.log(achievementsArray[gameCount].gameName);
+            if (achvCount < achievementsArray[gameCount].gameAchievements) { //achievementsArray[gameCount].gameName
 
-            //set data
-            achvIcon.src = achvIconURL;
-            achvIcon.alt = "icon";
+                console.log("achv");
+                console.log(achv);
+                
 
-            achvName.textContent = "Achievement #" + (achvCount + 1); //Name of the achievement
+                    const achvIconURL = "./images/blank-user-profile.png"; //[achv.icon] //whatever the attribute is to retrieve the achievement's icon
+                    //create elements
+                    const divL0 = document.createElement("div");
+                    
+                    const achvIcon = document.createElement("img");
+                    const achvName = document.createElement("p");
+                    const yourCompletion = document.createElement("img");
+                    const otherCompletion = document.createElement("img");
 
-            yourCompletion.src = "./images/unchecked.svg"; //for User1: checked.svg if achv is complete, unchecked.svg if achv isn't
-            otherCompletion.src = "./images/checked.svg"; //for User2: checked.svg if achv is complete, unchecked.svg if achv isn't
+                    //set data
+                    achvIcon.src = achvIconURL;
+                    achvIcon.alt = "icon";
 
-            
-            //set class
-            divL0.className = "listedAchievement";
+                    achvName.textContent = "achv.displayName"; //Name of the achievement
 
-            //place in top div
-            divL0.appendChild(achvIcon);
-            divL0.appendChild(achvName);
-            divL0.appendChild(yourCompletion);
-            divL0.appendChild(otherCompletion);
+                    yourCompletion.src = "./images/unchecked.svg"; //for User1: checked.svg if achv is complete, unchecked.svg if achv isn't
+                    otherCompletion.src = "./images/checked.svg"; //for User2: checked.svg if achv is complete, unchecked.svg if achv isn't
 
-            //place in level 8 game div
-            gameDivL8.appendChild(divL0);
+                    
+                    //set class
+                    divL0.className = "listedAchievement";
 
-            achvCount++;
+                    //place in top div
+                    divL0.appendChild(achvIcon);
+                    divL0.appendChild(achvName);
+                    divL0.appendChild(yourCompletion);
+                    divL0.appendChild(otherCompletion);
+
+                    //place in level 8 game div
+                    divL8.appendChild(divL0);
+                
+            achv++;
         }
         
     }
