@@ -334,9 +334,19 @@ function loadGameAccordion(gamesArray, achievementsArray, userOneInfo, userTwoIn
             //##############################set data##############################
             loadGameAchievements(achievementsArray, divL8, achievementsOne, achievementsTwo, gameCount)
 
-            buttonL4.textContent = achievementsArray[gameCount].gameName;
+            if (achievementsArray[gameCount].gameName === "") {
+                buttonL4.textContent = "[NO NAME], appid: " + gamesArray[gameCount].appid;
 
-            pL6a.textContent = game.playtime_forever + " minutes"; //User1's playtime_forever for game of gamesArray
+            } else {
+                buttonL4.textContent = achievementsArray[gameCount].gameName;
+            }
+            
+            if (game.playtime_forever > 500) {
+                pL6a.textContent = (game.playtime_forever / 60).toFixed(2) + " hours";    
+            } else {
+                pL6a.textContent = game.playtime_forever + " minutes"; //User1's playtime_forever for game of gamesArray
+            }
+            
             pL6b.innerHTML = "<strong>Playtime</strong>";
             pL6c.textContent = "### minutes"; //User2's playtime_forever for game of gamesArray
 
@@ -484,6 +494,9 @@ function loadGameAchievements(achievementsArray, divL8, achievementsOne, achieve
     var user2CurrentGame = achievementsTwo[gameCount];
 
     var achvNum = 0;
+    try {
+        
+    
     for (const achv of currentGame.gameAchievements) {
 
         //var user1CurrentAchv = user1CurrentGame[]
@@ -492,70 +505,71 @@ function loadGameAchievements(achievementsArray, divL8, achievementsOne, achieve
         const achvIconURL = achv.icon; //[achv.icon] //whatever the attribute is to retrieve the achievement's icon
                 
         //create elements
-                const divL0 = document.createElement("div");
-                
-                const achvIcon = document.createElement("img");
-                const achvName = document.createElement("p");
-                const yourCompletion = document.createElement("img");
-                const otherCompletion = document.createElement("img");
+        const divL0 = document.createElement("div");
+        
+        const achvIcon = document.createElement("img");
+        const achvName = document.createElement("p");
+        const yourCompletion = document.createElement("img");
+        const otherCompletion = document.createElement("img");
 
-                //set data
-                achvIcon.src = achvIconURL;
-                achvIcon.alt = "icon";
+        //set data
+        achvIcon.src = achvIconURL;
+        achvIcon.alt = "icon";
 
-                if (achv.displayName == null || achv.displayName == undefined) {
-                    achvName.textContent = "empty";
-                }
-                achvName.textContent = achv.displayName; //Name of the achievement
+        if (achv.displayName == null || achv.displayName == undefined) {
+            achvName.textContent = "empty";
+        }
+        achvName.textContent = achv.displayName; //Name of the achievement
 
-                /*if (completionBoolean(achievementsOne, gameCount) == true) {
-                    yourCompletion.src = "./images/checked.svg";
-                } else {
-                    yourCompletion.src = "./images/unchecked.svg";
-                }
-                
-                if (completionBoolean(achievementsTwo, gameCount) == true) {
-                    otherCompletion.src = "./images/checked.svg";
-                } else {
-                    otherCompletion.src = "./images/unchecked.svg";
-                }*/
-                console.log("achievementsOne[gameCount][achvNum].achieved: " + user1CurrentGame[achvNum].achieved);
-                console.log("achievementsTwo[gameCount][achvNum].achieved: " + user2CurrentGame[achvNum].achieved);
-                
-                
-                if (user1CurrentGame[achvNum].achieved == 1) {
-                    yourCompletion.src = "./images/checked.svg";
-                    console.log("achievementsOne: " + gameCount + " " + achvNum + " true");
-                } else if (user1CurrentGame[achvNum].achieved == 0) {
-                    yourCompletion.src = "./images/unchecked.svg";
-                    console.log("achievementsOne: " + gameCount + " " + achvNum + " false");
-                }
+        /*if (completionBoolean(achievementsOne, gameCount) == true) {
+            yourCompletion.src = "./images/checked.svg";
+        } else {
+            yourCompletion.src = "./images/unchecked.svg";
+        }
+        
+        if (completionBoolean(achievementsTwo, gameCount) == true) {
+            otherCompletion.src = "./images/checked.svg";
+        } else {
+            otherCompletion.src = "./images/unchecked.svg";
+        }*/
+        console.log("achievementsOne[gameCount][achvNum].achieved: " + user1CurrentGame[achvNum].achieved);
+        console.log("achievementsTwo[gameCount][achvNum].achieved: " + user2CurrentGame[achvNum].achieved);
+        
+        
+        if (user1CurrentGame[achvNum].achieved == 1) {
+            yourCompletion.src = "./images/checked.svg";
+            console.log("achievementsOne: " + gameCount + " " + achvNum + " true");
+        } else if (user1CurrentGame[achvNum].achieved == 0) {
+            yourCompletion.src = "./images/unchecked.svg";
+            console.log("achievementsOne: " + gameCount + " " + achvNum + " false");
+        }
 
-                if (user2CurrentGame[achvNum].achieved == 1) {
-                    otherCompletion.src = "./images/checked.svg";
-                    console.log("achievementsTwo: " + gameCount + " " + achvNum + " true");
-                } else if (user2CurrentGame[achvNum].achieved == 0) {
-                    otherCompletion.src = "./images/unchecked.svg";
-                    console.log("achievementsTwo: " + gameCount + " " + achvNum + " false");
-                }
+        if (user2CurrentGame[achvNum].achieved == 1) {
+            otherCompletion.src = "./images/checked.svg";
+            console.log("achievementsTwo: " + gameCount + " " + achvNum + " true");
+        } else if (user2CurrentGame[achvNum].achieved == 0) {
+            otherCompletion.src = "./images/unchecked.svg";
+            console.log("achievementsTwo: " + gameCount + " " + achvNum + " false");
+        }
 
 
-                //yourCompletion.src = "./images/unchecked.svg"; //for User1: checked.svg if achv is complete, unchecked.svg if achv isn't
-                //otherCompletion.src = "./images/checked.svg"; //for User2: checked.svg if achv is complete, unchecked.svg if achv isn't
+        //yourCompletion.src = "./images/unchecked.svg"; //for User1: checked.svg if achv is complete, unchecked.svg if achv isn't
+        //otherCompletion.src = "./images/checked.svg"; //for User2: checked.svg if achv is complete, unchecked.svg if achv isn't
 
-                
-                //set class
-                divL0.className = "listedAchievement";
+        
+        //set class
+        divL0.className = "listedAchievement";
 
-                //place in top div
-                divL0.appendChild(achvIcon);
-                divL0.appendChild(achvName);
-                divL0.appendChild(yourCompletion);
-                divL0.appendChild(otherCompletion);
+        //place in top div
+        divL0.appendChild(achvIcon);
+        divL0.appendChild(achvName);
+        divL0.appendChild(yourCompletion);
+        divL0.appendChild(otherCompletion);
 
-                //place in level 8 game div
-                divL8.appendChild(divL0);
-                achvNum++;
+        //place in level 8 game div
+        divL8.appendChild(divL0);
+        achvNum++;
+        }
     }
     
     
