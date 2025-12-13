@@ -49,6 +49,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // testing
     let tstId = "76561199073557362";
     let tstID2 = "76561199268185945";
+    let tstID3 = "76561199214605508";
     /*
     let games = await GetOwnedGames(key, tstId);
     console.log("GAMES");
@@ -111,6 +112,10 @@ async function FetchInformation(key, idOne, idTwo){
     const libraryTwo = await GetOwnedGames(key, idTwo);
 
 
+    /*console.log("Library 1 & 2:");
+    console.log(libraryOne);
+    console.log(libraryTwo);*/
+
     // Compare libraries
 
     // OBJECTS: appid, playtime_forever (measured in minutes)
@@ -128,49 +133,45 @@ async function FetchInformation(key, idOne, idTwo){
     let gameIcons = [];
     let gameSchema = [];
 
-    try {
         // sift through library to collect info on both
-        for (let i = 0; i < collectiveLibrary.length; i++){
-            achievementsOne.push(await GetPlayerAchievements(key, idOne, collectiveLibrary[i].appid));
-            achievementsTwo.push(await GetPlayerAchievements(key, idTwo, collectiveLibrary[i].appid));
-            gameIcons.push(await GetGameIcon(collectiveLibrary[i].appid));
-            gameSchema.push(await GetSchemaForGame(key, collectiveLibrary[i].appid));
-        }
-        console.log([playerInfoOne, playerInfoTwo, collectiveLibrary, achievementsOne, achievementsTwo, gameSchema, gameIcons]);
-
-        return [playerInfoOne, playerInfoTwo, collectiveLibrary, achievementsOne, achievementsTwo, gameSchema, gameIcons];
-    } catch(error) {
-        console.log("FetchInfo Error: " + error);
+    for (let i = 0; i < collectiveLibrary.length; i++){
+        achievementsOne.push(await GetPlayerAchievements(key, idOne, collectiveLibrary[i].appid));
+        achievementsTwo.push(await GetPlayerAchievements(key, idTwo, collectiveLibrary[i].appid));
+        gameIcons.push(await GetGameIcon(collectiveLibrary[i].appid));
+        gameSchema.push(await GetSchemaForGame(key, collectiveLibrary[i].appid));
     }
+    console.log([playerInfoOne, playerInfoTwo, collectiveLibrary, achievementsOne, achievementsTwo, gameSchema, gameIcons]);
+
+    return [playerInfoOne, playerInfoTwo, collectiveLibrary, achievementsOne, achievementsTwo, gameSchema, gameIcons];
 }
 
 
 // accepts two libraries returns a list of games they have in common
 function CompareLibraries(libraryOne, libraryTwo){
+    console.log("Libary 1 & 2:");
+    console.log(libraryOne);
+    console.log(libraryTwo);
     let shorterLibrary;
     let longerLibrary;
-    try {
-        if (libraryOne.length > libraryTwo.length){
-            shorterLibrary = libraryTwo;
-            longerLibrary = libraryOne;
-        } else{
-            shorterLibrary = libraryOne;
-            longerLibrary = libraryTwo;
-        }
-        let commonGames = [];
-        // ADD IGNORED IDS
-        let ignoredAppIds = [422450, 1422450, 320, 623990];
-        for (let indexLong = 0; indexLong < longerLibrary.length; indexLong++){
-            for (let indexShort = 0; indexShort < shorterLibrary.length; indexShort++){
-                if (shorterLibrary[indexShort].appid === longerLibrary[indexLong].appid && !ignoredAppIds.includes(shorterLibrary[indexShort].appid)){
-                    commonGames.push(shorterLibrary[indexShort])
-                }
+    if (libraryOne.length > libraryTwo.length){
+        shorterLibrary = libraryTwo;
+        longerLibrary = libraryOne;
+    } else{
+        shorterLibrary = libraryOne;
+        longerLibrary = libraryTwo;
+    }
+    let commonGames = [];
+    // ADD IGNORED IDS
+    let ignoredAppIds = [422450, 1422450, 320, 623990];
+    for (let indexLong = 0; indexLong < longerLibrary.length; indexLong++){
+        for (let indexShort = 0; indexShort < shorterLibrary.length; indexShort++){
+            if (shorterLibrary[indexShort].appid === longerLibrary[indexLong].appid && !ignoredAppIds.includes(shorterLibrary[indexShort].appid)){
+                commonGames.push(shorterLibrary[indexShort])
             }
         }
-        return commonGames;
-    } catch(error) {
-        console.log("CompareLibaries error: " + error);
     }
+    return commonGames;
+    
 }
 
 
@@ -189,14 +190,14 @@ async function GetOwnedGames(key, steamId){
 
 // Accepts a key and a userID
 // Returns userAvatar and userName as object; user avatar is a link stored as str, userName is an str
-async function GetPlayerSummary(key, steamId){
+/*async function GetPlayerSummary(key, steamId){
     let link = `http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${key}&steamids=${steamId}`;
     let playerSummary = await FetchAPI(link);
     playerSummary = playerSummary.response.players[0]
     let userAvatar = playerSummary.avatarfull;
     let userName = playerSummary.personaname;
     return {userAvatar, userName};
-}
+}*/
 
 // Accepts key and app ID
 // Returs game Name and gameAchievements in an object
@@ -475,10 +476,15 @@ function loadGameAccordion(gamesArray, achievementsArray, userOneInfo, userTwoIn
 }
 
 function loadGameAchievements(achievementsArray, divL8, achievementsOne, achievementsTwo, gameCount) {
+    const currentGame = achievementsArray[gameCount];
+    /*if (!currentGame) return;
+    const achievements = currentGame.gameAchievements;
+    if (!Array.isArray(achievements)) return;*/
     var achvCount = 0;
-    for (achv of achievementsArray[gameCount].gameAchievements) {
-            console.log(achievementsArray[gameCount].gameName);
-            if (achvCount < achievementsArray[gameCount].gameAchievements) { //achievementsArray[gameCount].gameName
+
+    for (achv of achievements) { //achievementsArray[gameCount].gameAchievements
+            console.log(achievements.gameName);
+            if (achvCount < achievements) { //achievementsArray[gameCount].gameName
 
                 console.log("achv");
                 console.log(achv);
