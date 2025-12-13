@@ -231,7 +231,9 @@ async function GetPlayerAchievements(key, steamId, appId){
     } catch{
         achievements = [];
     }
-    
+    if (achievements === undefined || achievements === null){
+        achievements = [];
+    }
     return achievements;
 }
 
