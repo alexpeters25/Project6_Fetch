@@ -49,6 +49,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // testing
     let tstId = "76561199073557362";
     let tstID2 = "76561199268185945";
+    let tstID3 = "76561199214605508";
     /*
     let games = await GetOwnedGames(key, tstId);
     console.log("GAMES");
@@ -189,14 +190,14 @@ async function GetOwnedGames(key, steamId){
 
 // Accepts a key and a userID
 // Returns userAvatar and userName as object; user avatar is a link stored as str, userName is an str
-async function GetPlayerSummary(key, steamId){
+/*async function GetPlayerSummary(key, steamId){
     let link = `http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${key}&steamids=${steamId}`;
     let playerSummary = await FetchAPI(link);
     playerSummary = playerSummary.response.players[0]
     let userAvatar = playerSummary.avatarfull;
     let userName = playerSummary.personaname;
     return {userAvatar, userName};
-}
+}*/
 
 // Accepts key and app ID
 // Returs game Name and gameAchievements in an object
@@ -474,9 +475,9 @@ function loadGameAccordion(gamesArray, achievementsArray, userOneInfo, userTwoIn
 
 function loadGameAchievements(achievementsArray, divL8, achievementsOne, achievementsTwo, gameCount) {
     const currentGame = achievementsArray[gameCount];
-    if (!currentGame) return;
+    /*if (!currentGame) return;
     const achievements = currentGame.gameAchievements;
-    if (!Array.isArray(achievements)) return;
+    if (!Array.isArray(achievements)) return;*/
     var achvCount = 0;
 
     for (achv of achievements) { //achievementsArray[gameCount].gameAchievements
