@@ -55,8 +55,6 @@ p > .active {
 }
 
 
-
-
 /*Helps override the default bootstrap settings*/
 .darkPrimaryBg {
     color: var(--darkPrimaryBg);
@@ -78,12 +76,9 @@ p > .active {
 }
 
 
-
-
-
 #pageFrame { /*Header, Body, Footer: grid*/
     display: grid;
-    grid-template-rows: minmax(50px, 10vh) auto minmax(50px, 8vh); /*figure out exact later*/
+    grid-template-rows: minmax(50px, 10vh) auto minmax(50px, 8vh);
     flex-wrap: nowrap;
     margin: 0;
     min-height: 100vh;
@@ -174,9 +169,7 @@ p > .active {
 }
 
 
-
 /*--------------------Entered Data Screen--------------------*/
-
 
 /*Avatar*/
 #avatarRow {
@@ -209,9 +202,7 @@ p > .active {
     height: min(20vw, 120px);
     width: min(20vw, 120px);
     border-radius: 10px;
-    
 }
-
 
 
 /*Accordion*/
@@ -257,10 +248,7 @@ p > .active {
 
 .gameTitleRibbon {
     background-color: var(--medSecondaryBg);
-    /*align-self: center;*/
-
 }
-
 
 .gameBoxBody {
     background-color: var(--lightPrimaryBg);
@@ -280,9 +268,6 @@ p > .active {
     justify-self: center;
     margin: 0;
 }
-
-
-
 
 
 .achievementCount {
@@ -310,10 +295,6 @@ p > .active {
 }
 
 
-
-
-
-
 .achievementListBox {
     border: 1px solid white;
     background-color: var(--medSecondaryBg);
@@ -322,10 +303,7 @@ p > .active {
 }
 
 
-
 .listedAchievement {
-    /*border: 1px dashed yellowgreen;*/
-
     display: grid;
     grid-template-columns: 5% auto 10% 10%;
     margin: 0 30px 20px;
@@ -334,23 +312,19 @@ p > .active {
 }
 
 .listedAchievement img {
-    /*border: 1px solid white;*/
     align-self: center;
     margin: 0;
     height: min(20px, 5vw);
-    
     width: auto;
     max-width: 100%;
 }
 
 
 .listedAchievement p {
-    /*border: 1px solid white;*/
     align-self: center;
     text-wrap: wrap;
     margin: 0 10px;
     padding: 0 8px;
-    /*height: min(20px, 5vw);             May not need this, working so far without*/
 }
 
 

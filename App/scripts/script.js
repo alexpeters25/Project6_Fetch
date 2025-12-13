@@ -10,7 +10,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     
     enter.addEventListener("click", async() => {
-        //e.preventDefault(); //I forget if we need to prevent default here, so far doesn't appear to need it
         const yourID = document.querySelector("#yourID").value;
         const otherID = document.querySelector("#otherID").value;
 
