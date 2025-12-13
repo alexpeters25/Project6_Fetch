@@ -23,22 +23,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         initialScreen.className = "isHidden";
         dataScreen.className = "isVisible";
 
-        // Comments on generated variables in FetchInformation
+        if(gameArray.length > 0) {
+            loadGameAccordion(gameArray, achvGameArray, userOneInfo, userTwoInfo, achievementsOne, achievementsTwo, gameIcons);
         
-        //html generator test arrays
-        // const gameArray = ['game1', 'game2', 'game3', 'game4'] //gameArray needs to end up as an array of the game objects
-        // const achvGameArray = [['achv1', 'achv2', 'achv3', 'achv4'], //achvGameArray needs to end up as a 3d array with its achievements array in the same index as the game in gameArray
-        //                         ['achv1', 'achv2', 'achv3', 'achv4'], 
-        //                         ['achv1', 'achv2', 'achv3', 'achv4'],
-        //                         ['achv1', 'achv2', 'achv3', 'achv4']];
-        
-        
-        //Loads and sets the data into html
-        loadGameAccordion(gameArray, achvGameArray, userOneInfo, userTwoInfo, achievementsOne, achievementsTwo);
-        
+            btnChangeAll();
+        } else {
+            noSharedGames(userOneInfo, userTwoInfo);
+        }
 
-
-        btnChangeAll();
+        
         
     });
     
@@ -111,11 +104,6 @@ async function FetchInformation(key, idOne, idTwo){
     const libraryOne = await GetOwnedGames(key, idOne);
     const libraryTwo = await GetOwnedGames(key, idTwo);
 
-
-    /*console.log("Library 1 & 2:");
-    console.log(libraryOne);
-    console.log(libraryTwo);*/
-
     // Compare libraries
 
     // OBJECTS: appid, playtime_forever (measured in minutes)
@@ -148,9 +136,6 @@ async function FetchInformation(key, idOne, idTwo){
 
 // accepts two libraries returns a list of games they have in common
 function CompareLibraries(libraryOne, libraryTwo){
-    console.log("Libary 1 & 2:");
-    console.log(libraryOne);
-    console.log(libraryTwo);
     let shorterLibrary;
     let longerLibrary;
     let shorterPlayer;
@@ -182,10 +167,8 @@ function CompareLibraries(libraryOne, libraryTwo){
             }
         }
     }
-    console.log("commonGames:");
-    console.log(commonGames);
+
     return commonGames;
-    
 }
 
 
@@ -280,11 +263,8 @@ async function FetchAPI(link){
 }
 
 
-
-
-
 //html generation
-function loadGameAccordion(gamesArray, achievementsArray, userOneInfo, userTwoInfo, achievementsOne, achievementsTwo) { //still needs data to be set
+function loadGameAccordion(gamesArray, achievementsArray, userOneInfo, userTwoInfo, achievementsOne, achievementsTwo, gameIcons) { //still needs data to be set
     var gameCount = 0;
     const divFrameBody2 = document.querySelector("#frameBody2");
 
@@ -305,9 +285,11 @@ function loadGameAccordion(gamesArray, achievementsArray, userOneInfo, userTwoIn
     userTwoName.textContent = userTwoInfo.userName;
 
 
+
+
     for (game of gamesArray) {
         if (gameCount < gamesArray.length) { 
-            console.log("game:" + game);
+            
             //create elements
             const divL0 = document.createElement("div");
             const divL1 = document.createElement("div");
@@ -318,6 +300,8 @@ function loadGameAccordion(gamesArray, achievementsArray, userOneInfo, userTwoIn
 
             const divL3 = document.createElement("div");
             const divL4 = document.createElement("div");
+
+            const ImgL5 = document.createElement("img");
 
             const divL5Playtime = document.createElement("div");
             const pL6a = document.createElement("p");
@@ -347,20 +331,30 @@ function loadGameAccordion(gamesArray, achievementsArray, userOneInfo, userTwoIn
             loadGameAchievements(achievementsArray, divL8, achievementsOne, achievementsTwo, gameCount)
 
             if (achievementsArray[gameCount].gameName === "") {
-                buttonL4.textContent = "[NO NAME], appid: " + gamesArray[gameCount].appid;
+                buttonL4.textContent = "[NO NAME], appid: " + game[0].appid;
 
             } else {
                 buttonL4.textContent = achievementsArray[gameCount].gameName;
             }
             
-            if (game.playtime_forever > 500) {
-                pL6a.textContent = (game.playtime_forever / 60).toFixed(2) + " hours";    
+
+            ImgL5.src = gameIcons[gameCount];
+            ImgL5.alt = "Game Banner";
+
+
+            if (game[0].playtime_forever > 500) {
+                pL6a.textContent = (game[0].playtime_forever / 60).toFixed(2) + " hours";    
             } else {
-                pL6a.textContent = game.playtime_forever + " minutes"; //User1's playtime_forever for game of gamesArray
+                pL6a.textContent = game[0].playtime_forever + " minutes"; //User1's playtime_forever for game of gamesArray
             }
-            
+
             pL6b.innerHTML = "<strong>Playtime</strong>";
-            pL6c.textContent = "### minutes"; //User2's playtime_forever for game of gamesArray
+
+            if (game[1].playtime_forever > 500) {
+                pL6c.textContent = (game[1].playtime_forever / 60).toFixed(2) + " hours";    
+            } else {
+                pL6c.textContent = game[1].playtime_forever + " minutes"; //User1's playtime_forever for game of gamesArray
+            }
 
             pL6d.innerHTML = "<strong>Achievements</strong>";
 
@@ -432,7 +426,7 @@ function loadGameAccordion(gamesArray, achievementsArray, userOneInfo, userTwoIn
             buttonL8.textContent = "Achievement List";
 
 
-            divL7.classList.add("accordion-collapse", "collapse"); //collapsed or show for testing
+            divL7.classList.add("accordion-collapse", "collapse"); //collapse or show for testing
             divL7.id = "collapseAchv" + gameCount;
             divL7.setAttribute("aria-labelledby", ("achvHeading" + gameCount));
             divL7.setAttribute("data-bs-parent", ("#achvAccordionParent" + gameCount));
@@ -459,11 +453,12 @@ function loadGameAccordion(gamesArray, achievementsArray, userOneInfo, userTwoIn
             divL5AchvCount.appendChild(pL6d);
             divL5AchvCount.appendChild(divL6CountBox);
 
-
             divL5Playtime.appendChild(pL6a);
             divL5Playtime.appendChild(pL6b);
             divL5Playtime.appendChild(pL6c);
 
+
+            divL4.appendChild(ImgL5);
 
             divL4.appendChild(divL5Playtime);
             divL4.appendChild(divL5AchvCount);
@@ -510,10 +505,8 @@ function loadGameAchievements(achievementsArray, divL8, achievementsOne, achieve
     try {
         for (const achv of currentGame.gameAchievements) {
 
-            //var user1CurrentAchv = user1CurrentGame[]
-
             //console.log(achv.displayName);
-            const achvIconURL = achv.icon; //[achv.icon] //whatever the attribute is to retrieve the achievement's icon
+            const achvIconURL = achv.icon;
                     
             //create elements
             const divL0 = document.createElement("div");
@@ -532,40 +525,22 @@ function loadGameAchievements(achievementsArray, divL8, achievementsOne, achieve
             }
             achvName.textContent = achv.displayName; //Name of the achievement
 
-            /*if (completionBoolean(achievementsOne, gameCount) == true) {
-                yourCompletion.src = "./images/checked.svg";
-            } else {
-                yourCompletion.src = "./images/unchecked.svg";
-            }
-            
-            if (completionBoolean(achievementsTwo, gameCount) == true) {
-                otherCompletion.src = "./images/checked.svg";
-            } else {
-                otherCompletion.src = "./images/unchecked.svg";
-            }*/
-            console.log("achievementsOne[gameCount][achvNum].achieved: " + user1CurrentGame[achvNum].achieved);
-            console.log("achievementsTwo[gameCount][achvNum].achieved: " + user2CurrentGame[achvNum].achieved);
-            
             
             if (user1CurrentGame[achvNum].achieved == 1) {
                 yourCompletion.src = "./images/checked.svg";
-                console.log("achievementsOne: " + gameCount + " " + achvNum + " true");
+                //console.log("achievementsOne: " + gameCount + " " + achvNum + " true");
             } else if (user1CurrentGame[achvNum].achieved == 0) {
                 yourCompletion.src = "./images/unchecked.svg";
-                console.log("achievementsOne: " + gameCount + " " + achvNum + " false");
+                //console.log("achievementsOne: " + gameCount + " " + achvNum + " false");
             }
 
             if (user2CurrentGame[achvNum].achieved == 1) {
                 otherCompletion.src = "./images/checked.svg";
-                console.log("achievementsTwo: " + gameCount + " " + achvNum + " true");
+                //console.log("achievementsTwo: " + gameCount + " " + achvNum + " true");
             } else if (user2CurrentGame[achvNum].achieved == 0) {
                 otherCompletion.src = "./images/unchecked.svg";
-                console.log("achievementsTwo: " + gameCount + " " + achvNum + " false");
+                //console.log("achievementsTwo: " + gameCount + " " + achvNum + " false");
             }
-
-
-            //yourCompletion.src = "./images/unchecked.svg"; //for User1: checked.svg if achv is complete, unchecked.svg if achv isn't
-            //otherCompletion.src = "./images/checked.svg"; //for User2: checked.svg if achv is complete, unchecked.svg if achv isn't
 
             
             //set class
@@ -595,42 +570,29 @@ function loadGameAchievements(achievementsArray, divL8, achievementsOne, achieve
         achvName.textContent = "No Achievements available for this game. :(";
 
         divL0.appendChild(achvName);
-
         divL8.appendChild(divL0);
     }
-    
-    
-    
-
-
-
-
-
-
-
-    
-
-    /*for (achv of achievements) { //achievementsArray[gameCount].gameAchievements
-            console.log(achievements.gameName);
-            if (achvCount < achievements) { //achievementsArray[gameCount].gameName
-
-                console.log("achv");
-                console.log(achv);
-                
-
-                    
-                
-            achv++;
-        }
-        
-    }*/
 }
+
+function completionRatio(achievementsUser, gameCount) {
+    var total = 0;
+    var completed = 0;
+    for (const achv of achievementsUser[gameCount]) {
+        total += 1;
+        completed += achv.achieved;
+    }
+
+    if (total > 0) {
+        return `${completed} / ${total}`;
+    } else {
+        return 'NA';
+    }
+};
 
 //Expand All / Collapse All button
 function btnChangeAll() {
     const btnChangeAll = document.querySelector(".expandShrink");
     const divCollapse = document.querySelectorAll("div.accordion-collapse.collapse");
-    console.log(divCollapse);
 
     btnChangeAll.addEventListener("click", (e) => {
     e.preventDefault();
@@ -641,31 +603,45 @@ function btnChangeAll() {
         else if (btnChangeAll.textContent === "Collapse All") {
             bootstrap.Collapse.getOrCreateInstance(div).hide();
         }
-        
     }
+
     btnChangeAll.textContent = btnChangeAll.textContent === "Expand All" ? "Collapse All" : "Expand All";
     btnChangeAll.id = btnChangeAll.id === "expand" ? "shrink" : "expand";
     });
 }
 
-function completionRatio(achievementsUser, gameCount) {
-    var total = 0;
-    var completed = 0;
-    for (const achv of achievementsUser[gameCount]) {
-        console.log("achv:");
-        console.log(achv.achieved);
+function noSharedGames(userOneInfo, userTwoInfo) {
+    const divFrameBody2 = document.querySelector("#frameBody2");
 
-        total += 1;
-        completed += achv.achieved;
-    }
-    console.log("completed: " + completed);
-    console.log("total: " + total);
 
-    if (total > 0) {
-        return `${completed} / ${total}`;
-    } else {
-        return 'NA';
-    }
+    //Access avatarRow elements
+    const userOneImg = document.querySelector("#userOneImg");
+    const userTwoImg = document.querySelector("#userTwoImg");
 
-   
-};
+    const userOneName = document.querySelector('label[for="avatar1"]');
+    const userTwoName = document.querySelector('label[for="avatar2"]');
+
+
+    //Set data for avatarRow elements
+    userOneImg.src = userOneInfo.userAvatar;
+    userTwoImg.src = userTwoInfo.userAvatar;
+
+    userOneName.textContent = userOneInfo.userName;
+    userTwoName.textContent = userTwoInfo.userName;
+
+
+    //Create and set no-games message
+    const altDivL0 = document.createElement("div");
+    const altH1L1 = document.createElement("h1");
+    const altpL1 = document.createElement("p");
+
+
+    altH1L1.textContent = "No Shared Games!";
+    altpL1.textContent = "Try comparing with another user"
+
+    altDivL0.appendChild(altH1L1);
+    altDivL0.appendChild(altpL1);
+    divFrameBody2.appendChild(altDivL0);
+
+
+}
