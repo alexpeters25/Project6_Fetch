@@ -43,49 +43,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     let tstId = "76561199073557362";
     let tstID2 = "76561199268185945";
     let tstID3 = "76561199214605508";
-    /*
-    let games = await GetOwnedGames(key, tstId);
-    console.log("GAMES");
-    console.log(games);
-
     
-    let summaryResponse = await GetPlayerSummary(key, tstId);
-    let userAvatar = summaryResponse.userAvatar;
-    let userName = summaryResponse.userName;
-    console.log("USER INFO");
-    console.log(userAvatar);
-    console.log(userName);
-    
-
-    let schemaResponse = await GetSchemaForGame(key, 440);
-    let gameName = schemaResponse.gameName;
-    let gameAchievements = schemaResponse.gameAchievements;
-    console.log("SCHEMA");
-    console.log(gameName);
-    console.log(gameAchievements);
-
-
-    let userAchievements = await GetPlayerAchievements(key, tstId, 440);
-    console.log("TF2 ACHIEVEMENTS");
-    console.log(userAchievements);
-
-    let gameIcon = await GetGameIcon(440);
-    console.log("TF2 ICON");
-    console.log(gameIcon);
-    */ 
-
-    // compareLibraries testing
-    // let tstIdTwo = "76561199214605508"
-    // let games = await GetOwnedGames(key, tstId);
-    // let gamesTwo = await GetOwnedGames(key, tstIdTwo);
-    // let commonGames = compareLibraries(games, gamesTwo);
-    // console.log(commonGames);
-    // let commonSchema = [];
-    // for (let i=0; i<commonGames.length; i++){
-    //     let gameSchema = await GetSchemaForGame(key, commonGames[i].appid);
-    //     commonSchema.push(gameSchema);
-    // }
-    // console.log(commonSchema);
 });
 
 
@@ -190,9 +148,17 @@ async function GetOwnedGames(key, steamId){
 async function GetPlayerSummary(key, steamId){
     let link = `http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${key}&steamids=${steamId}`;
     let playerSummary = await FetchAPI(link);
-    playerSummary = playerSummary.response.players[0]
-    let userAvatar = playerSummary.avatarfull;
-    let userName = playerSummary.personaname;
+    let userAvatar;
+    let userName;
+    try {
+        playerSummary = playerSummary.response.players[0]
+        userAvatar = playerSummary.avatarfull;
+        userName = playerSummary.personaname;
+    } catch {
+        userAvatar = "Invalid"
+        userName = "Invalid"
+    }
+    
     return {userAvatar, userName};
 }
 
