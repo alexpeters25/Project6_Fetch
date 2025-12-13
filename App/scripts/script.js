@@ -47,10 +47,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     
 
 
-    // testing
-    let tstId = "76561199073557362";
-    let tstID2 = "76561199268185945";
-    let tstID3 = "76561199214605508";
+    // testing ids
+    let tstId = "76561199073557362"; //The Byrd
+    let tstID2 = "76561199268185945"; //alexpeters
+    let tstID3 = "76561199214605508"; //RedPanda
+
     /*
     let games = await GetOwnedGames(key, tstId);
     console.log("GAMES");
