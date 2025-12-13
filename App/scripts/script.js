@@ -135,10 +135,10 @@ async function FetchInformation(key, idOne, idTwo){
 
         // sift through library to collect info on both
     for (let i = 0; i < collectiveLibrary.length; i++){
-        achievementsOne.push(await GetPlayerAchievements(key, idOne, collectiveLibrary[i].appid));
-        achievementsTwo.push(await GetPlayerAchievements(key, idTwo, collectiveLibrary[i].appid));
-        gameIcons.push(await GetGameIcon(collectiveLibrary[i].appid));
-        gameSchema.push(await GetSchemaForGame(key, collectiveLibrary[i].appid));
+        achievementsOne.push(await GetPlayerAchievements(key, idOne, collectiveLibrary[i][0].appid));
+        achievementsTwo.push(await GetPlayerAchievements(key, idTwo, collectiveLibrary[i][0].appid));
+        gameIcons.push(await GetGameIcon(collectiveLibrary[i][0].appid));
+        gameSchema.push(await GetSchemaForGame(key, collectiveLibrary[i][0].appid));
     }
     console.log([playerInfoOne, playerInfoTwo, collectiveLibrary, achievementsOne, achievementsTwo, gameSchema, gameIcons]);
 
