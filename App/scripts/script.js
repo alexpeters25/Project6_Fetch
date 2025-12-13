@@ -23,20 +23,19 @@ document.addEventListener('DOMContentLoaded', async () => {
             dataScreen.className = "isVisible";
 
             if(gameArray.length > 0) {
-                loadGameAccordion(gameArray, achvGameArray, userOneInfo, userTwoInfo, achievementsOne, achievementsTwo, gameIcons);
-            
-                btnChangeAll();
-            } else {
+            loadGameAccordion(gameArray, achvGameArray, userOneInfo, userTwoInfo, achievementsOne, achievementsTwo, gameIcons);
+        
+            btnChangeAll();
+        } 
+            else {
                 noSharedGames(userOneInfo, userTwoInfo);
                 const divFrameBody2 = document.querySelector("#frameBody2");
                 const goBackBtn = document.querySelector("#goBack");
                 const divNoSharedMsg = document.querySelector(".noSharedMsg");
-
                 goBackBtn.addEventListener("click", () => {
                     divFrameBody2.removeChild(divNoSharedMsg);
                     initialScreen.className = "isVisible";
                     dataScreen.className = "isHidden";
-
                 });
             }    
         } catch (e){
@@ -473,7 +472,7 @@ function loadGameAccordion(gamesArray, achievementsArray, userOneInfo, userTwoIn
 
     const btnChangeAll = document.createElement("button");
     btnChangeAll.type = "button";
-    btnChangeAll.className = "expandShrink";
+    btnChangeAll.className = "loadedButton";
     btnChangeAll.id = "expand";
     btnChangeAll.textContent = "Expand All";
 
