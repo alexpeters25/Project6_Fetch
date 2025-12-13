@@ -16,6 +16,14 @@ h1 ~ p {
     text-align: center;
 }
 
+
+.noSharedMsg {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
 body {
     margin: 0; /*Brings margin out to edges of viewport*/
     color: var(--primaryTextColor);
@@ -346,7 +354,7 @@ p > .active {
 }
 
 
-.expandShrink {
+.loadedButton {
     margin-top: 30px;
     border: 1px solid var(--darkPrimaryBg);
     border-radius: 5px;
@@ -356,13 +364,13 @@ p > .active {
     font-size: min(3vw, 20px);
 }
 
-.expandShrink:hover {
+.loadedButton:hover {
     background-color: var(--primaryTextColor);
     box-shadow: 1px 1px 5px black, -1px -1px 5px black;
     
 }
 
-.expandShrink:active {
+.loadedButton:active {
     background-color: var(--secondaryTextColor);   
     box-shadow: 1px 1px 5px #111111, -1px -1px 5px #111111;
     color: white;

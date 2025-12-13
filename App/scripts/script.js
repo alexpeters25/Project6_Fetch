@@ -29,11 +29,20 @@ document.addEventListener('DOMContentLoaded', async () => {
             btnChangeAll();
         } else {
             noSharedGames(userOneInfo, userTwoInfo);
-        }
+            const divFrameBody2 = document.querySelector("#frameBody2");
+            const goBackBtn = document.querySelector("#goBack");
+            const divNoSharedMsg = document.querySelector(".noSharedMsg");
 
-        
+            goBackBtn.addEventListener("click", () => {
+                divFrameBody2.removeChild(divNoSharedMsg);
+                initialScreen.className = "isVisible";
+                dataScreen.className = "isHidden";
+
+            });
+        }    
         
     });
+
     
 
     
@@ -591,7 +600,7 @@ function completionRatio(achievementsUser, gameCount) {
 
 //Expand All / Collapse All button
 function btnChangeAll() {
-    const btnChangeAll = document.querySelector(".expandShrink");
+    const btnChangeAll = document.querySelector(".loadedButton");
     const divCollapse = document.querySelectorAll("div.accordion-collapse.collapse");
 
     btnChangeAll.addEventListener("click", (e) => {
@@ -613,7 +622,6 @@ function btnChangeAll() {
 function noSharedGames(userOneInfo, userTwoInfo) {
     const divFrameBody2 = document.querySelector("#frameBody2");
 
-
     //Access avatarRow elements
     const userOneImg = document.querySelector("#userOneImg");
     const userTwoImg = document.querySelector("#userTwoImg");
@@ -629,19 +637,27 @@ function noSharedGames(userOneInfo, userTwoInfo) {
     userOneName.textContent = userOneInfo.userName;
     userTwoName.textContent = userTwoInfo.userName;
 
-
     //Create and set no-games message
     const altDivL0 = document.createElement("div");
     const altH1L1 = document.createElement("h1");
     const altpL1 = document.createElement("p");
 
+    altDivL0.className = "noSharedMsg"
 
     altH1L1.textContent = "No Shared Games!";
     altpL1.textContent = "Try comparing with another user"
 
+    //Create and set goBack button
+    const goBackBtn = document.createElement("button");
+    goBackBtn.type = "button";
+    goBackBtn.className = "loadedButton";
+    goBackBtn.id = "goBack";
+    goBackBtn.textContent = "Go Back";
+
     altDivL0.appendChild(altH1L1);
     altDivL0.appendChild(altpL1);
-    divFrameBody2.appendChild(altDivL0);
+    altDivL0.appendChild(goBackBtn);
 
+    divFrameBody2.appendChild(altDivL0);
 
 }
