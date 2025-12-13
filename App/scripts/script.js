@@ -15,31 +15,33 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         console.log("yourID: " + yourID);
         console.log("otherID: " + otherID);
+        try{
+            const [userOneInfo, userTwoInfo, gameArray, achievementsOne, achievementsTwo, achvGameArray, gameIcons] = await FetchInformation(key, yourID, otherID);
+            
 
-        const [userOneInfo, userTwoInfo, gameArray, achievementsOne, achievementsTwo, achvGameArray, gameIcons] = await FetchInformation(key, yourID, otherID);
-        
+            initialScreen.className = "isHidden";
+            dataScreen.className = "isVisible";
 
-        initialScreen.className = "isHidden";
-        dataScreen.className = "isVisible";
+            if(gameArray.length > 0) {
+                loadGameAccordion(gameArray, achvGameArray, userOneInfo, userTwoInfo, achievementsOne, achievementsTwo, gameIcons);
+            
+                btnChangeAll();
+            } else {
+                noSharedGames(userOneInfo, userTwoInfo);
+                const divFrameBody2 = document.querySelector("#frameBody2");
+                const goBackBtn = document.querySelector("#goBack");
+                const divNoSharedMsg = document.querySelector(".noSharedMsg");
 
-        if(gameArray.length > 0) {
-            loadGameAccordion(gameArray, achvGameArray, userOneInfo, userTwoInfo, achievementsOne, achievementsTwo, gameIcons);
-        
-            btnChangeAll();
-        } else {
-            noSharedGames(userOneInfo, userTwoInfo);
-            const divFrameBody2 = document.querySelector("#frameBody2");
-            const goBackBtn = document.querySelector("#goBack");
-            const divNoSharedMsg = document.querySelector(".noSharedMsg");
+                goBackBtn.addEventListener("click", () => {
+                    divFrameBody2.removeChild(divNoSharedMsg);
+                    initialScreen.className = "isVisible";
+                    dataScreen.className = "isHidden";
 
-            goBackBtn.addEventListener("click", () => {
-                divFrameBody2.removeChild(divNoSharedMsg);
-                initialScreen.className = "isVisible";
-                dataScreen.className = "isHidden";
-
-            });
-        }    
-        
+                });
+            }    
+        } catch (e){
+            alert("An Error Has Occured: " + e);
+        }
     });
 
     
@@ -71,13 +73,18 @@ async function FetchInformation(key, idOne, idTwo){
 
     const playerInfoOne = await GetPlayerSummary(key, idOne);
     const playerInfoTwo = await GetPlayerSummary(key, idTwo);
-
+    if (playerInfoOne === "Invalid" || playerInfoTwo === "Invalid"){
+        throw new Error("One or Both Steam Ids are Invalid");
+    }
 
     // Grab all games for each player
 
     const libraryOne = await GetOwnedGames(key, idOne);
     const libraryTwo = await GetOwnedGames(key, idTwo);
 
+    if (libraryOne === undefined || libraryTwo=== undefined){
+        throw new Error("One or Both Libraries are Empty or Private");
+    }
     // Compare libraries
 
     // OBJECTS: appid, playtime_forever (measured in minutes)
@@ -171,8 +178,7 @@ async function GetPlayerSummary(key, steamId){
         userAvatar = playerSummary.avatarfull;
         userName = playerSummary.personaname;
     } catch {
-        userAvatar = "Invalid"
-        userName = "Invalid"
+        return "Invalid";
     }
     
     return {userAvatar, userName};
