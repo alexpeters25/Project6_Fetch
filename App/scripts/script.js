@@ -26,7 +26,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             loadGameAccordion(gameArray, achvGameArray, userOneInfo, userTwoInfo, achievementsOne, achievementsTwo, gameIcons);
         
             btnChangeAll();
-        } else {
+        } 
+        
+        
+        else {
             noSharedGames(userOneInfo, userTwoInfo);
             const divFrameBody2 = document.querySelector("#frameBody2");
             const goBackBtn = document.querySelector("#goBack");
@@ -494,7 +497,7 @@ function loadGameAccordion(gamesArray, achievementsArray, userOneInfo, userTwoIn
 
     const btnChangeAll = document.createElement("button");
     btnChangeAll.type = "button";
-    btnChangeAll.className = "expandShrink";
+    btnChangeAll.className = "loadedButton";
     btnChangeAll.id = "expand";
     btnChangeAll.textContent = "Expand All";
 
