@@ -153,12 +153,17 @@ function CompareLibraries(libraryOne, libraryTwo){
     console.log(libraryTwo);
     let shorterLibrary;
     let longerLibrary;
+    let shorterPlayer;
+    let libraryList;
+    
     if (libraryOne.length > libraryTwo.length){
         shorterLibrary = libraryTwo;
         longerLibrary = libraryOne;
+        shorterPlayer = 2
     } else{
         shorterLibrary = libraryOne;
         longerLibrary = libraryTwo;
+        shorterPlayer = 1
     }
     let commonGames = [];
     // ADD IGNORED IDS
@@ -166,7 +171,14 @@ function CompareLibraries(libraryOne, libraryTwo){
     for (let indexLong = 0; indexLong < longerLibrary.length; indexLong++){
         for (let indexShort = 0; indexShort < shorterLibrary.length; indexShort++){
             if (shorterLibrary[indexShort].appid === longerLibrary[indexLong].appid && !ignoredAppIds.includes(shorterLibrary[indexShort].appid)){
-                commonGames.push(shorterLibrary[indexShort])
+                
+                if (shorterPlayer == 2){
+                    libraryList = [longerLibrary[indexLong], shorterLibrary[indexShort]]
+                } else{
+                    libraryList = [shorterLibrary[indexShort], longerLibrary[indexLong]]
+                }
+                
+                commonGames.push(libraryList);
             }
         }
     }
