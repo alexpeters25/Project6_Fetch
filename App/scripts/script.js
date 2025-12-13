@@ -190,14 +190,14 @@ async function GetOwnedGames(key, steamId){
 
 // Accepts a key and a userID
 // Returns userAvatar and userName as object; user avatar is a link stored as str, userName is an str
-/*async function GetPlayerSummary(key, steamId){
+async function GetPlayerSummary(key, steamId){
     let link = `http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${key}&steamids=${steamId}`;
     let playerSummary = await FetchAPI(link);
     playerSummary = playerSummary.response.players[0]
     let userAvatar = playerSummary.avatarfull;
     let userName = playerSummary.personaname;
     return {userAvatar, userName};
-}*/
+}
 
 // Accepts key and app ID
 // Returs game Name and gameAchievements in an object
