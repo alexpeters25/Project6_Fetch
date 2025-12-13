@@ -10,7 +10,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     
     enter.addEventListener("click", async() => {
-        //e.preventDefault(); //I forget if we need to prevent default here, so far doesn't appear to need it
         const yourID = document.querySelector("#yourID").value;
         const otherID = document.querySelector("#otherID").value;
 
@@ -29,20 +28,37 @@ document.addEventListener('DOMContentLoaded', async () => {
             btnChangeAll();
         } else {
             noSharedGames(userOneInfo, userTwoInfo);
-        }
+            const divFrameBody2 = document.querySelector("#frameBody2");
+            const goBackBtn = document.querySelector("#goBack");
+            const divNoSharedMsg = document.querySelector(".noSharedMsg");
 
-        
+            goBackBtn.addEventListener("click", () => {
+                divFrameBody2.removeChild(divNoSharedMsg);
+                initialScreen.className = "isVisible";
+                dataScreen.className = "isHidden";
+
+            });
+        }    
         
     });
-    
 
     
 
+    
 
-    // testing
-    let tstId = "76561199073557362";
-    let tstID2 = "76561199268185945";
-    let tstID3 = "76561199214605508";
+
+
+
+    // testing ids
+    let tstId = "76561199073557362"; //The Byrd
+    let tstID2 = "76561199268185945"; //alexpeters
+    let tstID3 = "76561199214605508"; //RedPanda
+
+    
+    let games = await GetOwnedGames(key, tstId);
+    console.log("GAMES");
+    console.log(games);
+
     
 });
 
@@ -557,7 +573,7 @@ function completionRatio(achievementsUser, gameCount) {
 
 //Expand All / Collapse All button
 function btnChangeAll() {
-    const btnChangeAll = document.querySelector(".expandShrink");
+    const btnChangeAll = document.querySelector(".loadedButton");
     const divCollapse = document.querySelectorAll("div.accordion-collapse.collapse");
 
     btnChangeAll.addEventListener("click", (e) => {
@@ -579,7 +595,6 @@ function btnChangeAll() {
 function noSharedGames(userOneInfo, userTwoInfo) {
     const divFrameBody2 = document.querySelector("#frameBody2");
 
-
     //Access avatarRow elements
     const userOneImg = document.querySelector("#userOneImg");
     const userTwoImg = document.querySelector("#userTwoImg");
@@ -595,19 +610,27 @@ function noSharedGames(userOneInfo, userTwoInfo) {
     userOneName.textContent = userOneInfo.userName;
     userTwoName.textContent = userTwoInfo.userName;
 
-
     //Create and set no-games message
     const altDivL0 = document.createElement("div");
     const altH1L1 = document.createElement("h1");
     const altpL1 = document.createElement("p");
 
+    altDivL0.className = "noSharedMsg"
 
     altH1L1.textContent = "No Shared Games!";
     altpL1.textContent = "Try comparing with another user"
 
+    //Create and set goBack button
+    const goBackBtn = document.createElement("button");
+    goBackBtn.type = "button";
+    goBackBtn.className = "loadedButton";
+    goBackBtn.id = "goBack";
+    goBackBtn.textContent = "Go Back";
+
     altDivL0.appendChild(altH1L1);
     altDivL0.appendChild(altpL1);
-    divFrameBody2.appendChild(altDivL0);
+    altDivL0.appendChild(goBackBtn);
 
+    divFrameBody2.appendChild(altDivL0);
 
 }
