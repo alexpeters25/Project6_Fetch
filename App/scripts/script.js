@@ -250,7 +250,7 @@ async function FetchAPI(link){
 }
 
 
-//html generation
+//Html Generation Functions
 function loadGameAccordion(gamesArray, achievementsArray, userOneInfo, userTwoInfo, achievementsOne, achievementsTwo, gameIcons) { //still needs data to be set
     var gameCount = 0;
     const divFrameBody2 = document.querySelector("#frameBody2");
@@ -263,15 +263,12 @@ function loadGameAccordion(gamesArray, achievementsArray, userOneInfo, userTwoIn
     const userOneName = document.querySelector('label[for="avatar1"]');
     const userTwoName = document.querySelector('label[for="avatar2"]');
 
-
     //Set data for avatarRow elements
     userOneImg.src = userOneInfo.userAvatar;
     userTwoImg.src = userTwoInfo.userAvatar;
 
     userOneName.textContent = userOneInfo.userName;
     userTwoName.textContent = userTwoInfo.userName;
-
-
 
 
     for (game of gamesArray) {
@@ -306,7 +303,6 @@ function loadGameAccordion(gamesArray, achievementsArray, userOneInfo, userTwoIn
             const divL5AchvAccordion = document.createElement("div");
             const divL6AchvAccordionItem = document.createElement("div");
 
-
             const h4L7 = document.createElement("h4");
             const buttonL8 = document.createElement("button");
 
@@ -314,7 +310,7 @@ function loadGameAccordion(gamesArray, achievementsArray, userOneInfo, userTwoIn
             const divL8 = document.createElement("div");
             
 
-            //##############################set data##############################
+            //set data
             loadGameAchievements(achievementsArray, divL8, achievementsOne, achievementsTwo, gameCount)
 
             if (achievementsArray[gameCount].gameName === "") {
@@ -324,10 +320,8 @@ function loadGameAccordion(gamesArray, achievementsArray, userOneInfo, userTwoIn
                 buttonL4.textContent = achievementsArray[gameCount].gameName;
             }
             
-
             ImgL5.src = gameIcons[gameCount];
             ImgL5.alt = "Game Banner";
-
 
             if (game[0].playtime_forever > 500) {
                 pL6a.textContent = (game[0].playtime_forever / 60).toFixed(2) + " hours";    
@@ -345,25 +339,18 @@ function loadGameAccordion(gamesArray, achievementsArray, userOneInfo, userTwoIn
 
             pL6d.innerHTML = "<strong>Achievements</strong>";
 
-
             pL7a.textContent = completionRatio(achievementsOne, gameCount); //User1's completed achvmnts / total achvmnts for game of gamesArray
             pL7b.innerHTML = "<strong>Completion</strong>";
             pL7c.textContent = completionRatio(achievementsTwo, gameCount); //User2's completed achvmnts / total achvmnts for game of gamesArray
 
 
-
-            //##############################set data END##############################
-
             //set classes and id's
             divL0.className = "accordion";
             divL0.id = "accordionParent" + gameCount;
 
-
             divL1.className = "gameBox"
 
-
             divL2.classList.add("accordion-item", "primaryTextColor");
-
 
             h2L3.classList.add("accordion-header", "gametitleRibbon");
             h2L3.id = "heading" + gameCount;
@@ -374,10 +361,8 @@ function loadGameAccordion(gamesArray, achievementsArray, userOneInfo, userTwoIn
             buttonL4.setAttribute("data-bs-target", ("#collapse" + gameCount));
             buttonL4.setAttribute("aria-expanded", "true");
             buttonL4.setAttribute("aria-controls", ("collapse" + gameCount));
-            //buttonL4.textContent = "Game #" + (gameCount + 1);
 
-
-            divL3.classList.add("accordion-collapse", "collapse"); //collapse or show for testing
+            divL3.classList.add("accordion-collapse", "collapse");
             divL3.id = "collapse" + gameCount;
             divL3.setAttribute("aria-labelledby", ("heading" + gameCount));
             divL3.setAttribute("data-bs-parent", ("#accordionParent" + gameCount));
@@ -412,15 +397,13 @@ function loadGameAccordion(gamesArray, achievementsArray, userOneInfo, userTwoIn
             buttonL8.setAttribute("aria-controls", ("collapseAchv" + gameCount));
             buttonL8.textContent = "Achievement List";
 
-
-            divL7.classList.add("accordion-collapse", "collapse"); //collapse or show for testing
+            divL7.classList.add("accordion-collapse", "collapse");
             divL7.id = "collapseAchv" + gameCount;
             divL7.setAttribute("aria-labelledby", ("achvHeading" + gameCount));
             divL7.setAttribute("data-bs-parent", ("#achvAccordionParent" + gameCount));
 
 
             divL8.classList.add("accordion-body", "achievementListBox");
-
 
 
             //place elements
@@ -475,7 +458,6 @@ function loadGameAccordion(gamesArray, achievementsArray, userOneInfo, userTwoIn
     btnChangeAll.className = "loadedButton";
     btnChangeAll.id = "expand";
     btnChangeAll.textContent = "Expand All";
-
 
     divFrameBody2.appendChild(btnChangeAll);
 }
