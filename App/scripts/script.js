@@ -43,24 +43,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
-    
-
-    
-
-
-
-
-    // testing ids
-    let tstId = "76561199073557362"; //The Byrd
-    let tstID2 = "76561199268185945"; //alexpeters
-    let tstID3 = "76561199214605508"; //RedPanda
-
-    
-    let games = await GetOwnedGames(key, tstId);
-    console.log("GAMES");
-    console.log(games);
-
-    
 });
 
 
@@ -250,7 +232,8 @@ async function FetchAPI(link){
 }
 
 
-//Html Generation Functions
+// --------Html Generation Functions--------
+
 function loadGameAccordion(gamesArray, achievementsArray, userOneInfo, userTwoInfo, achievementsOne, achievementsTwo, gameIcons) { //still needs data to be set
     var gameCount = 0;
     const divFrameBody2 = document.querySelector("#frameBody2");
@@ -543,6 +526,7 @@ function loadGameAchievements(achievementsArray, divL8, achievementsOne, achieve
     }
 }
 
+// Helper Function
 function completionRatio(achievementsUser, gameCount) {
     var total = 0;
     var completed = 0;
