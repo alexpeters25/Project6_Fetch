@@ -16,6 +16,12 @@ h1 ~ p {
     text-align: center;
 }
 
+#aboutH1 {
+    color: var(--ribbonTextColor);
+}
+#aboutH1 ~ p {
+    width: max(500px, 50vw);
+}
 
 .noSharedMsg {
     display: flex;
